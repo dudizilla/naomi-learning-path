@@ -61,16 +61,65 @@
         }
 
         .chapter::after {
-        content: "❦";
-        font-size: 20px;
-        text-align: center;
-        display: block;
+            content: "❦";
+            font-size: 20px;
+            text-align: center;
+            display: block;
         }
 
         .nth-child-example:nth-child(2n){
             color: greenyellow;
         }
 
+        .ex-box {
+            border: 3px solid #aaa;
+            background-color: #f1bfbf;
+            height: 200px;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            float: left;
+            margin-right: 10px;
+            border-radius: 5px;
+            font-size: 30px;
+        }
+
+        .ex-box:last-of-type{
+            margin-top: 10px;
+        }
+
+        .ex-box:hover{
+            background-color: #e38e8e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        
+        .box-1 {
+            border: 1px solid black;
+            color: white;
+            background-color: blue;
+            height: 150px;
+            width: 300px;
+        }
+
+        .box-2 {
+            border: 1px solid black;
+            color: white;
+            background-color: red;
+            height: 100px;
+            width: 300px;
+        }
+
+        .box-3 {
+            border: 1px solid black;
+            color: white;
+            background-color: green;
+            height: 200px;
+            width: 100px;
+        }
     </style>
 </head>
 <body>
@@ -95,6 +144,14 @@
         <li class="nth-child-example"> Third </li>
         <li class="nth-child-example"> Fourth </li>
     </ol>
+
+    <div class="ex-box"> Box 1</div>
+    <div class="ex-box"> Box 2</div>
+    <div class="ex-box"> Box 3</div>
+
+    <div class="box-1">1</div>
+    <div class="box-2">2</div>
+    <div class="box-3">3</div>
 
 </body>
 </html>
