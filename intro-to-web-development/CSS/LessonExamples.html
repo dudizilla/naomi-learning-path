@@ -60,6 +60,17 @@
             color: blanchedalmond;
         }
 
+        .chapter::after {
+        content: "❦";
+        font-size: 20px;
+        text-align: center;
+        display: block;
+        }
+
+        .nth-child-example:nth-child(2n){
+            color: greenyellow;
+        }
+
     </style>
 </head>
 <body>
@@ -75,5 +86,15 @@
 
     <button> <a href="https://www.youtube.com"> Visit here!</a> </button>
     
+
+    <div class="chapter"> One chapter </div>
+
+    <ol>
+        <li class="nth-child-example"> First </li>
+        <li class="nth-child-example"> Second </li>
+        <li class="nth-child-example"> Third </li>
+        <li class="nth-child-example"> Fourth </li>
+    </ol>
+
 </body>
 </html>
