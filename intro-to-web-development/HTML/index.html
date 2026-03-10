@@ -4,12 +4,47 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Naomi's Blog</title>
+
+        <style>
+            body{
+                text-align: center;
+                align-items: center;
+            }
+
+            #page-title{
+                color: rgb(13, 68, 98);
+                text-decoration: underline;
+                text-align: center;
+            }
+
+            .post-feed{
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .post{
+                background-color: rgb(139, 211, 250);
+                width: 60%;
+                border-radius: 25px;
+                padding: 20px;
+                margin: 10px;
+                text-align: left;
+            }
+
+            .author-name,.posted-date{
+                color: #000000aa;
+            }
+
+        </style>
     </head>
 
     <body>
-        <h1> This is my personal blog </h1>
+        <h1 id="page-title"> Welcome to my personal blog! </h1>
 
-        <a href="about.html"> Click here to know more about me!</a>
+        <button>
+            <a href="about.html"> Click here to know more about me!</a>
+        </button>
 
         <div class="post-feed">   
             <div class="post">
