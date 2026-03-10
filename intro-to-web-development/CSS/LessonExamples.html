@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CSS Examples </title>
+    
+    <style>
+        .hover-example{
+           background-color: aquamarine; 
+           color: black;
+           width: 30%;
+           height: 30%;
+           font-size: 15px;
+        }
+        .hover-example:hover{
+           background-color: violet; 
+           color: blue;
+           width: 35%;
+           height: 40%;
+           font-size: 25px;
+        }
+
+        .first-child-example{
+            color: orange;
+            border-bottom: 1px solid black;
+        }
+
+        .first-child-example:first-child{
+            color: royalblue;
+        }
+
+        .first-child-example:last-child{
+            border-bottom: none;
+        }
+
+        ol{
+            width: 80%;
+        }
+
+        a:visited{
+            color: black;
+        }
+
+        a:hover{
+            color: aliceblue;
+        }
+
+       
+        button{
+            width: 90px;
+            height: 25px;
+            background-color: blanchedalmond;
+        }
+
+        button:hover{
+            width: 100px;
+            height: 30px;
+            background-color: black;
+            color: blanchedalmond;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hover-example">
+        Hover over this
+    </div>
+
+    <ol>
+        <li class="first-child-example"> First </li>
+        <li class="first-child-example"> Second </li>
+        <li class="first-child-example"> Third </li>
+    </ol>
+
+    <button> <a href="https://www.youtube.com"> Visit here!</a> </button>
+    
+</body>
+</html>
