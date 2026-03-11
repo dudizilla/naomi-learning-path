@@ -120,6 +120,63 @@
             height: 200px;
             width: 100px;
         }
+
+        
+        .flex-container{
+            display: flex;
+            width: 80%;
+            border: 1px double black;
+        }
+
+        .jc-sa{
+            justify-content: space-around;
+        }
+        
+        .jc-sb{
+            justify-content: space-between;
+        }
+
+        .jc-right{
+            justify-content: flex-end;
+        }
+
+        .jc-center{
+            justify-content: center;
+        }
+
+        .fd-rev{
+            flex-direction: row-reverse;
+        }
+
+        .fd-col{
+            flex-direction:column;
+        }
+
+        .ai-fe{
+            align-items: flex-end;
+        }
+
+        .ai-center{
+            align-items: center;
+        }
+
+        .ai-stretch{
+            align-items: stretch;
+        }
+
+        .grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 10px;
+            column-gap: 10px;
+            align-items: center;
+        }
+
+        .grid-pic{
+            margin: 0px;
+            padding: 0px;
+            width: 100px;
+        }
     </style>
 </head>
 <body>
@@ -149,9 +206,90 @@
     <div class="ex-box"> Box 2</div>
     <div class="ex-box"> Box 3</div>
 
-    <div class="box-1">1</div>
-    <div class="box-2">2</div>
-    <div class="box-3">3</div>
+    <div class="flex-container jc-sa">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-sb">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-right">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-center">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container fd-rev">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container fd-col">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container ai-fe">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container ai-center">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container ai-stretch">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <h2> CSS Grid </h2>
+    <div class="grid">
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+    
+    </div>
+
 
 </body>
 </html>
