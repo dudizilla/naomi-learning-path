@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coffee Masters</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
-        rel="stylesheet"
-    />
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
     <link rel="stylesheet" href="index.css">
 
 </head>
@@ -15,7 +12,6 @@
     <header>
         <img class="page-logo" src="coffee_masters_logo.png"/>
         <h2 class="page-title"> Coffee Masters </h2>
-
     </header>
 
     <div class="order-page">
@@ -26,10 +22,27 @@
                     <div class="quantity"> 1x </div>
                     <div class="item"> 
                         <p class="item-name"> Cappuccino </p>
-                        <span class="item-spec"> Milk </span>
-                        <span class="item-spec"> Extra Foam </span>     
+                        <p class="item-spec"> Milk </p>
+                        <p class="item-spec"> Extra Foam </p>     
                     </div>
                     <div class="item-price"> R$ 5.00 </div>
+                </li>
+                 <li class="order-item">
+                    <div class="quantity"> 2x </div>
+                    <div class="item"> 
+                        <p class="item-name"> Iced Americano </p>
+                        <p class="item-spec"> Extra Ice </p>     
+                    </div>
+                    <div class="item-price"> R$ 4.00 </div>
+
+                </li>
+                 <li class="order-item">
+                    <div class="quantity"> 1x </div>
+                    <div class="item"> 
+                        <p class="item-name"> Croissant </p>   
+                        <p class="item-spec"> Butter </p>  
+                    </div>
+                    <div class="item-price"> R$ 3.50 </div>
 
                 </li>
             </ul>
@@ -39,29 +52,29 @@
             <h2 class="section-title"> NAME </h2>
             <div class="input-box">
                 <label for="name"> Name for Order</label>
-                <input type="text">
+                <input type="text" placeholder="Ford Prefect">
             </div>
         </div>
         <div class="order-payment">
             <h2 class="section-title"> PAYMENT </h2>
             <div class="input-box card-number">
                 <label for="name"> CARD NUMBER </label>
-                <input type="text">
+                <input type="text" placeholder="1234 5678 9012"/>
             </div>
             <div class="input-box exp-date">
                 <label for="name"> EXP. DATE </label>
-                <input type="text">
+                <input type="text" placeholder="MM/YY"/>
             </div>
             <div class="input-box ccv-card">
                 <label for="name"> CCV </label>
-                <input type="text">
+                <input type="text" placeholder="***"/>
             </div>
         </div>
         <div class="order-total">
             <table class="total-table">
                 <tr>
                     <td> Subtotal: </td>
-                    <td class="table-price"> R$ 10.00</td>
+                    <td class="table-price"> R$ 12.50</td>
                 </tr>
                 <tr>
                      <td> Tax: </td>
@@ -69,7 +82,7 @@
                 </tr>
                 <tr class="final-total">
                     <td> Total: </td>
-                    <td class="table-price"> R$ 10.00</td>
+                    <td class="table-price"> R$ 12.50</td>
                 </tr>
             </table>
             <button> Place Order </button>

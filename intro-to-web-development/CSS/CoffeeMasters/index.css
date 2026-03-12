@@ -1,12 +1,14 @@
 *{
     box-sizing: border-box;
+    font-family: 'Open Sans';
+    color: #412315;
 }
 
 header{
     background-color: #412315;
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 20px 20px;
 }
 
 body{
@@ -15,17 +17,27 @@ body{
 
 .page-title{
     color: #f5ebbb;
+    margin: 0;
+}
+
+.page-logo{
+    width: 30px;
+    height: 35px;
+    margin-right: 10px;
 }
 
 .order-box,.order-name,.order-payment{
     background-color: #eee1d5;
-    padding: 15px 10px;
+    padding: 20px 25px;
+    border-radius: 20px;
 }
 
 .order-item{
     display: flex;
-    background-color: red;
-    padding: 20px;
+    padding: 20px 20px 10px 10px;
+    border-bottom: 3px solid #e9d5c2;
+    width: 95%;
+    margin-left: 10px;
 }
 
 .order-list{
@@ -33,15 +45,20 @@ body{
 }
 
 .item-name{
-    margin: 0px;
+    margin: 0px 0px 4px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .quantity{
-    padding-right: 10px;
+    padding-right: 20px;
+    font-weight: bold;
+    text-align: left;
 }
 
 .item-price{
     margin-left: auto;
+    font-weight: bold;
 }
 
 .order-box{
@@ -55,6 +72,7 @@ body{
 .order-payment{
     grid-area: payment;
     display: grid;
+    row-gap: 5px;
     grid-template-areas: 
     "payment-title payment-title"
     "card-number card-number"
@@ -63,8 +81,7 @@ body{
 
 .order-total{
     grid-area: total;
-    background-color: aqua;
-    margin-top: 40px;
+    margin-top: 60px;
     padding-top: 10px;
     justify-content: center;
     align-items: center;
@@ -74,19 +91,14 @@ body{
 
 .order-page{
     display: grid;
-    column-gap: 30px;
+    column-gap: 35px;
     row-gap: 20px;
     grid-template-areas: 
     "item name"
     "item payment"
     "total total";
     margin: 20px 10px;
-}
-
-.page-logo{
-    width: 30px;
-    padding: 15px 0;
-    margin-right: 10px;
+    padding: 20px;
 }
 
 .total-table{
@@ -105,35 +117,79 @@ body{
     border:none;
     margin-bottom: 20px ;
     background-color: #deb993;
+    font-size: 20px;
+}
+
+.order-total button:hover{
+    font-weight: bold;
+    border: 3px solid #7d532bf1;
 }
 
 .input-box{
     position: relative;
     display: inline-block;
+    margin: 15px 0;
+    width: 100%;
 }
 
 .input-box label{
+    font-size: 13px;
     position: absolute;
+    left: 15px;
+    top: -7px;
+    padding: 0 2px;
+    color: #412315e9;
+    background-color: #eee1d5;
+    padding: 0 5px;
 }
 
 .input-box input{
     border: 1px solid #8d6035;
     background-color: #eee1d5;
+    width: 100%;
+    height: 38px;
+    border-radius: 20px;
+    padding-left: 15px;
 }
 
 .card-number{
     grid-area: card-number;
 }
 
+.card-number input{
+    grid-area: card-number;
+}
+
+.order-item:last-child{
+    border: none;
+}
+
 .exp-date{
     grid-area: exp-date;
+    padding-right: 5px;
 }
 
 .ccv-card{
     grid-area: ccv-card;
+    padding-left: 5px;
 }
 
 .order-payment h2{
     grid-area: payment-title;
 }
 
+.section-title{
+    margin: 4px 0 5px 3px;
+    padding: 0;
+}
+
+.item-spec{
+    color: #8d6035f4;
+    margin: 0px;
+    font-size: 15px;
+}
+
+.final-total{
+    font-weight: bold;
+    padding-top: 15px;
+}
