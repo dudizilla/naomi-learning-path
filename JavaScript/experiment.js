@@ -1,4 +1,4 @@
-const character = "Coffee";
+const character = "☀️";
 let timesToRepeat = 10;
 
 let sentence = "";

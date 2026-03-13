@@ -31,7 +31,7 @@ function doStuff(B) {
     const D = "D";
     H = "something else";
   }
-  console.log(D); // defined out of scope
+  //console.log(D); // defined out of scope
   console.log(H); // works
 
   F = "F"
@@ -44,10 +44,66 @@ while (E < 3) {
   const G = "G"; 
 }
 console.log(E); //works
-console.log(G); // no, declared inside a different scope
+//console.log(G); // no, declared inside a different scope
 
 doStuff("B");
-console.log(B); //works
-console.log(C); // doesn't work, belongs to the function scope
+//console.log(B); // doesn't work here, out of scope
+//console.log(C); // doesn't work, belongs to the function scope
 console.log(F); //works
 
+const sentence = "ThIs HaS wEiRd CaSiNg On It";
+const lowerCaseSentence = sentence.toLowerCase();
+const upperCaseSentence = sentence.toUpperCase();
+console.log(lowerCaseSentence);
+console.log(upperCaseSentence);
+
+console.log(sentence.split(" "));
+
+console.log(sentence.substring(0,7));
+
+const number = 5.315;
+const roundNum = Math.round(number);
+const randNum = Math.random();
+const randFun = Math.round(Math.random()*100);
+
+console.log(`The number: ${number} \nThe rounded one: ${roundNum}\nA rand decimal: ${randNum}\n Having some fun with random: ${randFun}`);
+console.log(Date.now());
+
+const testStringOne = "The book is on the table";
+const testStringTwo = "An apple a day keeps the doctor away";
+const stringToLookFor = "book";
+
+console.log(testStringOne.includes(stringToLookFor));
+console.log(testStringTwo.includes(stringToLookFor));
+
+
+const person = {
+    name: "John",
+    shoutOut() {
+        console.log(this.name);
+    },
+}
+
+console.log(person.name);
+person.shoutOut();
+
+const me = {
+    name: {
+        firstName: "Naomi",
+        lastName: "Mori",
+    },
+    location: {
+        streetNumber: 13,
+        street: "Rua dos Bobos",
+        city: "Cidade Universitária",
+        state: "SP",
+        zipCode: "12345-000",
+        country: "Nowhereland",
+    },
+    getAdress() {
+        return `${this.name.firstName} ${this.name.lastName}\n${this.location.street}, ${this.location.streetNumber}, ${this.location.city}, ${this.location.state}, CEP ${this.location.zipCode}, ${this.location.country} 
+        `
+    },
+};
+
+console.log(me.getAdress());
