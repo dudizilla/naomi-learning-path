@@ -7,3 +7,6 @@ for(let i =0; i<timesToRepeat; i++){
 }
 
 console.log(sentence)
+
+let result = "".padStart(timesToRepeat,character)
+console.log(result)
