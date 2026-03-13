@@ -107,3 +107,49 @@ const me = {
 };
 
 console.log(me.getAdress());
+
+const pullOutAdress = me.getAdress.bind(me);
+
+const arrayEx = [
+    "Casa", 1, 3, 4, "teto", true, { name: "Naomi", lastName: "Mori"}
+];
+
+console.log(arrayEx);
+console.log(arrayEx.length);
+console.log(arrayEx.join(" --- "));
+
+const courses = [
+    {teacher: "Nakamura sense", course: "Intro to Japanese" ,},
+    {teacher: "John Kim", course: "Intro to Korean",},
+    {teacher: "Maria da Silva", course: "Intro to Portuguese",}
+];
+
+courses.push({teacher: "Peter Smith", course: "Advanced English"});
+console.log(courses);
+
+const engCourse = courses.pop();
+console.log(engCourse);
+
+courses[2] = {teacher: "Ellen Zhang", course: "Intro to Mandarin"}
+console.log(courses)
+
+const cities = [
+  "São Paulo",
+  "Porto Alegre",
+  "Seattle",
+  "Vancouver",
+];
+
+for (let i = 0; i < cities.length; i++) {
+  console.log(cities[i]);
+}
+
+cities.forEach(function (city) {
+  console.log(city);
+});
+
+cities.shift();
+console.log(cities);
+
+cities.unshift("Rio de Janeiro");
+console.log(cities)
