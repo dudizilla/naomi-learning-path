@@ -18,3 +18,36 @@ logOutYourHome(myHomeCity, myHomeState, myHomeCountry);
 const chirp = () => {
   console.log("chirp chirp");
 };
+
+
+const A = "A"; 
+let F; 
+
+function doStuff(B) {
+  console.log(B); //prints b
+  const C = "C";
+  let H = "H";
+  if (1 + 1 === 2) {
+    const D = "D";
+    H = "something else";
+  }
+  console.log(D); // defined out of scope
+  console.log(H); // works
+
+  F = "F"
+}
+
+let E = 0;
+while (E < 3) {
+  E++;
+  console.log(A); //works, 
+  const G = "G"; 
+}
+console.log(E); //works
+console.log(G); // no, declared inside a different scope
+
+doStuff("B");
+console.log(B); //works
+console.log(C); // doesn't work, belongs to the function scope
+console.log(F); //works
+
