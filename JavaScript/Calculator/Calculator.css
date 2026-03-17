@@ -3,6 +3,11 @@
     font-family: monospace;
 }
 
+body{
+    display: flex;
+    justify-content: center;
+}
+
 .calculator-container{
     width: 450px;
     height: 600px;

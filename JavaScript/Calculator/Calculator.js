@@ -19,27 +19,27 @@ function processNumber(num){
 
 function solveDivideMultiplication(operators,numbers){
     for (let i = 0; i < operators.length; i++) {
-    let symbol = operators[i];
+        let symbol = operators[i];
 
-    if (symbol === "x" || symbol === "÷") {
-        let leftNumber = numbers[i];
-        let rightNumber = numbers[i + 1];
-        let result;
+        if (symbol === "x" || symbol === "÷") {
+            let leftNumber = numbers[i];
+            let rightNumber = numbers[i + 1];
+            let result;
 
-        if (symbol === "x")
-            result = leftNumber * rightNumber;
-        else 
-            result = leftNumber / rightNumber;
+            if (symbol === "x")
+                result = leftNumber * rightNumber;
+            else 
+                result = leftNumber / rightNumber;
 
-        numbers.splice(i, 2, result); 
-        operators.splice(i, 1);
+            numbers.splice(i, 2, result); 
+            operators.splice(i, 1);
 
-        i -= 1; 
+            i -= 1; 
+        }
+
+        console.log(numbers);
+        console.log(operators);
     }
-
-    console.log(numbers);
-    console.log(operators);
-}
 }
 
 function solveAddSubtract(operators, numbers){   
@@ -99,6 +99,7 @@ function processSymbol(symbol){
             expression = "0";
             break;
         case "←":
+            // Backspace fix: remove blank spaces around ops as well
             expression = expression.substring(0,expression.length-1);
             input.value = expression || "";
             break;
@@ -107,11 +108,15 @@ function processSymbol(symbol){
         case "÷":
         case "x":
             opValidation(symbol);
+            break;
     }
 }
 
-
+function init(){
 document.querySelector(".calculator-container")
     .addEventListener("click", function (event) {
       click(event.target.innerText);
     });
+}
+
+init();
