@@ -15,6 +15,7 @@ function processNumber(num){
             expression += num;
 
     input.value = expression;
+    input.scrollLeft = input.scrollWidth;
 }
 
 function solveDivideMultiplication(operators,numbers){
@@ -85,6 +86,7 @@ function opValidation(operator){
     if (!isNaN(parseInt(lastPart))){
          expression += " " + operator + " ";
         input.value = expression;
+        input.scrollLeft = input.scrollWidth;
     }
 }
 
@@ -102,6 +104,7 @@ function processSymbol(symbol){
             // Backspace fix: remove blank spaces around ops as well
             expression = expression.substring(0,expression.length-1);
             input.value = expression || "";
+            input.scrollLeft = input.scrollWidth;
             break;
         case "+":
         case "-":
