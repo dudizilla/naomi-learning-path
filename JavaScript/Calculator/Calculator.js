@@ -90,6 +90,17 @@ function opValidation(operator){
     }
 }
 
+function backspaceHandle(){
+    const lastPart = expression.substring(expression.length-2,expression.length).trim();
+    if (isNaN(parseInt(lastPart)))
+        expression = expression.substring(0,expression.length-3);
+    else  
+        expression = expression.substring(0,expression.length-1);
+    
+    input.value = expression || "";
+    input.scrollLeft = input.scrollWidth;
+}
+
 function processSymbol(symbol){
     switch(symbol){
         case "C":
@@ -101,10 +112,7 @@ function processSymbol(symbol){
             expression = "0";
             break;
         case "←":
-            // Backspace fix: remove blank spaces around ops as well
-            expression = expression.substring(0,expression.length-1);
-            input.value = expression || "";
-            input.scrollLeft = input.scrollWidth;
+            backspaceHandle();
             break;
         case "+":
         case "-":
