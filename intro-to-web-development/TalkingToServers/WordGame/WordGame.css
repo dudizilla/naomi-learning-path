@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+}
+
+header {
+    text-align: center;
+    background-color: #aea1a1;
+    margin-bottom: 20px;
+}
+
+#page-title{
+    font-size: 60px;
+}
+
+.letter-board{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%; 
+    max-width: 350px;
+    margin: 0 auto;  
+    row-gap: 10px;
+    column-gap: 10px;
+}
+
+.letter-box{
+    width: 60px;
+    height: 60px;
+    border: 4px solid #CCCCCC;
+    text-transform: uppercase;
+    font-size: 50px;
+    font-weight: bold;
+    caret-color: transparent;
+    text-align: center;
+}
+
+.letter-box:focus{
+    outline: none;
+}
