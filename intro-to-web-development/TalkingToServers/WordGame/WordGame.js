@@ -11,7 +11,7 @@ let word = "";
 let rowComplete = false;
 let gameOver = false;
 
-const letterBoxes = document.querySelectorAll(".letter-box");
+const letterBoxes = document.querySelectorAll(".letter-board__item");
 
 function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
@@ -40,6 +40,7 @@ function displayMessage(message) {
     const infoBlock = document.querySelector(".info-block");
     infoBlock.innerHTML = "";
     const headingMessage = document.createElement("h2");
+    headingMessage.classList.add("info-block__title")
     headingMessage.textContent = message;
     infoBlock.appendChild(headingMessage);
 }
