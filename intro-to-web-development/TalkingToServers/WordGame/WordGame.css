@@ -21,15 +21,45 @@ header {
 .info-block {
     text-align: center;
     margin-top: 10px;
+    background-color: #cccccc;
+    margin: 10px 30px;
+    display: none;
 }
 
 .info-block__title {
     color: rgb(97, 96, 96);
-    background-color: #cccccc;
     padding: 10px;
     border-radius: 5px;
     font-family: sans-serif;
-    margin: 0 30px;
+    margin: 0
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+  visibility: hidden;
+  margin:15px auto;
+  position: relative;
+  color:#7f7e7e;
+  box-sizing: border-box;
+  animation: animloader 0.5s linear infinite alternate;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -38px -12px ,  -14px 0,  14px 0, 38px 0;
+  }
+  33% {
+    box-shadow: -38px 0px, -14px -12px,  14px 0, 38px 0;
+  }
+  66% {
+    box-shadow: -38px 0px , -14px 0, 14px -12px, 38px 0;
+  }
+  100% {
+    box-shadow: -38px 0 , -14px 0, 14px 0 , 38px -12px;
+  }
 }
 
 #page-title {
@@ -63,4 +93,20 @@ header {
 
 .letter-board__item:focus {
     outline: none;
+}
+
+.restart-button{
+    visibility: hidden;
+    width: 150px;
+    height: 65px;
+    font-size: 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: #1a1d1a;
+    color: #FFF;
+    margin: 10px auto;
+}
+
+.restart-button:hover{
+    background-color: #258c25;
 }

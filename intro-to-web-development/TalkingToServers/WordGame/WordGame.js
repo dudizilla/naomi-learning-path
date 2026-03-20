@@ -12,6 +12,14 @@ let rowComplete = false;
 let gameOver = false;
 
 const letterBoxes = document.querySelectorAll(".letter-board__item");
+const restartButton = document.querySelector(".restart-button");
+//restartButton.style.visibility = "hidden";
+
+const infoBlock = document.querySelector(".info-block");
+const loader = document.querySelector(".loader");
+//loader.style.visibility = "hidden";
+const heading2 = document.querySelector("h2");
+console.log(`Loader ${loader}`);
 
 function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
@@ -23,6 +31,15 @@ function emptyWord() {
 
 function removeLastLetter() {
     word = word.substring(0, word.length - 1);
+}
+
+function showLoader() {
+     infoBlock.style.display="block";
+    loader.style.visibility = "visible";
+}
+function hideLoader() {
+     infoBlock.style.display="none";
+    loader.style.visibility = "hidden";
 }
 
 function findRowBoxes() {
@@ -37,18 +54,20 @@ function findRowBoxes() {
 }
 
 function displayMessage(message) {
-    const infoBlock = document.querySelector(".info-block");
-    infoBlock.innerHTML = "";
+    infoBlock.style.display="block";
     const headingMessage = document.createElement("h2");
-    headingMessage.classList.add("info-block__title")
+    headingMessage.classList.add("info-block__title");
     headingMessage.textContent = message;
     infoBlock.appendChild(headingMessage);
+}
+
+function restartGame() {
+     location.reload();
 }
 
 async function isWordOfTheDay(row) {
     const promise = await fetch(WORD_URL);
     const response = await promise.json();
-
     const wordOfTheDay = String(response.word);
 
     const guess = word.toUpperCase();
@@ -84,12 +103,15 @@ async function isWordOfTheDay(row) {
     if (allGreen) {
         gameOver = true;
         displayMessage("CONGRATULATIONS, YOU WON! 🥳");
+        restartButton.style.visibility = "visible";
+        restartButton.addEventListener("click", restartGame);
     }
+    hideLoader();
 }
 
 async function checkWord(rowBoxes) {
     console.log(`The word is ${word}`);
-
+    showLoader();
     const promise = await fetch(VALIDATE_URL, {
         method: "POST",
         body: JSON.stringify({ word: word }),
@@ -100,12 +122,14 @@ async function checkWord(rowBoxes) {
     if (response.validWord) {
         await isWordOfTheDay(rowBoxes);
 
+        hideLoader();
         currentRow++;
         emptyWord();
         if (currentRow < 6) {
             letterBoxes[currentRow * 5].focus();
         }
     } else {
+        hideLoader();
         displayMessage("Not a valid word! Try again.");
         emptyWord();
 
@@ -152,8 +176,19 @@ letterBoxes.forEach((box, index) => {
     box.addEventListener("keyup", function (event) {
         const key = event.key;
 
+        const existingMessage = infoBlock.querySelector(".info-block__title");
+        if (existingMessage) {
+            existingMessage.remove();
+             infoBlock.style.display="none";
+        }
+
         const boxRow = Math.floor(index / 5);
         console.log(boxRow + " " + currentRow);
+
+        if (currentRow >= 5 & word.length) {
+            displayMessage("Oh no, you ran out of guesses :(");
+            restartButton.style.visibility = "visible";
+        }
 
         if (gameOver || boxRow > currentRow || key === " ") {
             event.preventDefault();
