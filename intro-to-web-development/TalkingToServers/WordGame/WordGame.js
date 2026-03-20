@@ -13,13 +13,10 @@ let gameOver = false;
 
 const letterBoxes = document.querySelectorAll(".letter-board__item");
 const restartButton = document.querySelector(".restart-button");
-//restartButton.style.visibility = "hidden";
-
 const infoBlock = document.querySelector(".info-block");
+const messageWrapper = document.querySelector(".info-block__wrapper");
 const loader = document.querySelector(".loader");
-//loader.style.visibility = "hidden";
 const heading2 = document.querySelector("h2");
-console.log(`Loader ${loader}`);
 
 function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
@@ -30,16 +27,31 @@ function emptyWord() {
 }
 
 function removeLastLetter() {
+    console.log(`REMOVE LAST LETTER ${word}`);
     word = word.substring(0, word.length - 1);
 }
 
 function showLoader() {
-     infoBlock.style.display="block";
-    loader.style.visibility = "visible";
+    loader.style.display = "block";
 }
+
 function hideLoader() {
-     infoBlock.style.display="none";
-    loader.style.visibility = "hidden";
+    loader.style.display = "none";
+}
+
+function clearMessage() {
+    const existingMessage = messageWrapper.querySelector(".info-block__title");
+    if (existingMessage) {
+        existingMessage.remove();
+    }
+}
+
+function displayMessage(message) {
+    clearMessage();
+    const headingMessage = document.createElement("h2");
+    headingMessage.classList.add("info-block__title");
+    headingMessage.textContent = message;
+    messageWrapper.appendChild(headingMessage);
 }
 
 function findRowBoxes() {
@@ -53,16 +65,8 @@ function findRowBoxes() {
     return rowBoxes;
 }
 
-function displayMessage(message) {
-    infoBlock.style.display="block";
-    const headingMessage = document.createElement("h2");
-    headingMessage.classList.add("info-block__title");
-    headingMessage.textContent = message;
-    infoBlock.appendChild(headingMessage);
-}
-
 function restartGame() {
-     location.reload();
+    location.reload();
 }
 
 async function isWordOfTheDay(row) {
@@ -99,6 +103,7 @@ async function isWordOfTheDay(row) {
         row[i].disabled = true;
     }
 
+    hideLoader();
     const allGreen = boxColors.every((color) => color === green);
     if (allGreen) {
         gameOver = true;
@@ -106,7 +111,6 @@ async function isWordOfTheDay(row) {
         restartButton.style.visibility = "visible";
         restartButton.addEventListener("click", restartGame);
     }
-    hideLoader();
 }
 
 async function checkWord(rowBoxes) {
@@ -121,7 +125,6 @@ async function checkWord(rowBoxes) {
 
     if (response.validWord) {
         await isWordOfTheDay(rowBoxes);
-
         hideLoader();
         currentRow++;
         emptyWord();
@@ -141,25 +144,40 @@ async function checkWord(rowBoxes) {
     }
 }
 
+function replaceAtIndex(str,index,replacement){
+    return str.slice(0,index) + replacement + str.slice(index+replacement.length);
+}
+
 function handleLetter(event, key, index, box) {
+
+    //index da box, string
+    console.log("Handle letter", box, word);
     event.preventDefault();
 
     if (word.length < 5) {
-        word += key;
-        box.value = key;
-        console.log(word);
-
-        if ((index + 1) % 5 !== 0) letterBoxes[index + 1].focus();
+        console.log("Passou 1o IF")
+        if (word.length===index+1){
+            console.log("Entrou no replacement")
+            replaceAtIndex(word,index,key);
+            console.log(word, "REPLACE")
+            box.value = key;
+        }
+        else{
+            word+=key
+            console.log(word);
+            if ((index + 1) % 5 !== 0) letterBoxes[index + 1].focus();
+            box.value = key;
+        }
     } else event.preventDefault();
 }
 
 function handleBackspace(index, box) {
+    console.log("Handle BACKSPACE", box, index);
     box.value = "";
-
     if (index % 5 !== 0) {
         letterBoxes[index - 1].focus();
-        removeLastLetter();
     }
+    removeLastLetter();
 }
 
 function handleEnter() {
@@ -176,16 +194,12 @@ letterBoxes.forEach((box, index) => {
     box.addEventListener("keyup", function (event) {
         const key = event.key;
 
-        const existingMessage = infoBlock.querySelector(".info-block__title");
-        if (existingMessage) {
-            existingMessage.remove();
-             infoBlock.style.display="none";
-        }
+        clearMessage();
 
         const boxRow = Math.floor(index / 5);
         console.log(boxRow + " " + currentRow);
 
-        if (currentRow >= 5 & word.length) {
+        if ((currentRow > 5) & word.length) {
             displayMessage("Oh no, you ran out of guesses :(");
             restartButton.style.visibility = "visible";
         }
