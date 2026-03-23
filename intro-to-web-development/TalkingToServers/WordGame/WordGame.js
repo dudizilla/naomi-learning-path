@@ -54,6 +54,11 @@ function displayMessage(message) {
     messageWrapper.appendChild(headingMessage);
 }
 
+function turnOnRestartButton() {
+    restartButton.style.visibility = "visible";
+    restartButton.addEventListener("click", restartGame);
+}
+
 function findRowBoxes() {
     const rowStart = currentRow * 5;
     const rowBoxes = [];
@@ -69,13 +74,18 @@ function restartGame() {
     location.reload();
 }
 
-async function isWordOfTheDay(row) {
+async function fetchWordOfTheDay() {
     const promise = await fetch(WORD_URL);
     const response = await promise.json();
     const wordOfTheDay = String(response.word);
+    return wordOfTheDay;
+}
 
+async function isWordOfTheDay(row) {
     const guess = word.toUpperCase();
-    const answer = wordOfTheDay.toUpperCase();
+    const answer = (await fetchWordOfTheDay()).toUpperCase();
+
+    console.log(`The answer is: ${answer}`)
 
     let remainingLetter = answer.split("");
     let boxColors = [gray, gray, gray, gray, gray];
@@ -108,8 +118,10 @@ async function isWordOfTheDay(row) {
     if (allGreen) {
         gameOver = true;
         displayMessage("CONGRATULATIONS, YOU WON! 🥳");
-        restartButton.style.visibility = "visible";
-        restartButton.addEventListener("click", restartGame);
+        turnOnRestartButton();
+    } else if (currentRow === 5 && !gameOver) {
+        displayMessage("Oh no, you ran out of guesses :(");
+        turnOnRestartButton();
     }
 }
 
@@ -144,40 +156,34 @@ async function checkWord(rowBoxes) {
     }
 }
 
-function replaceAtIndex(str,index,replacement){
-    return str.slice(0,index) + replacement + str.slice(index+replacement.length);
-}
 
-function handleLetter(event, key, index, box) {
-
-    //index da box, string
-    console.log("Handle letter", box, word);
+function handleLetter(event, key) {
     event.preventDefault();
 
     if (word.length < 5) {
-        console.log("Passou 1o IF")
-        if (word.length===index+1){
-            console.log("Entrou no replacement")
-            replaceAtIndex(word,index,key);
-            console.log(word, "REPLACE")
-            box.value = key;
+        word += key;
+        const currentBoxIndex = currentRow * 5 + word.length - 1;
+        letterBoxes[currentBoxIndex].value = key.toUpperCase();
+        if (word.length < 5) {
+            letterBoxes[currentBoxIndex + 1].focus();
         }
-        else{
-            word+=key
-            console.log(word);
-            if ((index + 1) % 5 !== 0) letterBoxes[index + 1].focus();
-            box.value = key;
-        }
-    } else event.preventDefault();
+    }
 }
 
-function handleBackspace(index, box) {
-    console.log("Handle BACKSPACE", box, index);
-    box.value = "";
-    if (index % 5 !== 0) {
-        letterBoxes[index - 1].focus();
+function handleBackspace(event, index, box) {
+    event.preventDefault(); 
+
+    if (box.value !== "") {
+        box.value = ""; 
+        removeLastLetter();
+    } 
+    
+    else if (index % 5 !== 0) { 
+        const previousBox = letterBoxes[index - 1];
+        previousBox.value = ""; 
+        previousBox.focus();   
+        removeLastLetter();     
     }
-    removeLastLetter();
 }
 
 function handleEnter() {
@@ -190,29 +196,25 @@ function handleEnter() {
     }
 }
 
+displayMessage("Click on the first box below to begin")
+
 letterBoxes.forEach((box, index) => {
-    box.addEventListener("keyup", function (event) {
+    box.addEventListener("keydown", function (event) {
         const key = event.key;
 
         clearMessage();
 
         const boxRow = Math.floor(index / 5);
-        console.log(boxRow + " " + currentRow);
-
-        if ((currentRow > 5) & word.length) {
-            displayMessage("Oh no, you ran out of guesses :(");
-            restartButton.style.visibility = "visible";
-        }
+        console.log(boxRow + " " + currentRow, gameOver);
 
         if (gameOver || boxRow > currentRow || key === " ") {
             event.preventDefault();
             return;
         }
-
         if (isLetter(key)) {
             handleLetter(event, key, index, box);
         } else if (key === "Backspace") {
-            handleBackspace(index, box);
+            handleBackspace(event,index, box);
         } else if (key === "Enter") {
             handleEnter();
         } else event.preventDefault();

@@ -105,9 +105,9 @@ header {
     text-align: center;
 }
 
-/* .letter-board__item:focus {
+.letter-board__item:focus {
     outline: none;
-} */
+}
 
 .restart-button {
     visibility: hidden;
