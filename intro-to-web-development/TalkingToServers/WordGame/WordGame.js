@@ -27,7 +27,6 @@ function emptyWord() {
 }
 
 function removeLastLetter() {
-    console.log(`REMOVE LAST LETTER ${word}`);
     word = word.substring(0, word.length - 1);
 }
 
@@ -85,8 +84,6 @@ async function isWordOfTheDay(row) {
     const guess = word.toUpperCase();
     const answer = (await fetchWordOfTheDay()).toUpperCase();
 
-    console.log(`The answer is: ${answer}`);
-
     let remainingLetter = answer.split("");
     let boxColors = [gray, gray, gray, gray, gray];
 
@@ -126,7 +123,6 @@ async function isWordOfTheDay(row) {
 }
 
 async function checkWord(rowBoxes) {
-    console.log(`The word is ${word}`);
     showLoader();
     const promise = await fetch(VALIDATE_URL, {
         method: "POST",
@@ -186,7 +182,6 @@ function handleBackspace(event, index, box) {
 function handleEnter() {
     const rowBoxes = findRowBoxes();
     const allFilled = rowBoxes.every((b) => b.value !== "");
-    console.log(allFilled);
 
     if (allFilled) {
         checkWord(rowBoxes);
@@ -202,7 +197,6 @@ letterBoxes.forEach((box, index) => {
         clearMessage();
 
         const boxRow = Math.floor(index / 5);
-        console.log(boxRow + " " + currentRow, gameOver);
 
         if (gameOver || boxRow > currentRow || key === " ") {
             event.preventDefault();
