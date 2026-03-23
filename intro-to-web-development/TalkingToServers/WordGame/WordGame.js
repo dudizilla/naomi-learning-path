@@ -85,7 +85,7 @@ async function isWordOfTheDay(row) {
     const guess = word.toUpperCase();
     const answer = (await fetchWordOfTheDay()).toUpperCase();
 
-    console.log(`The answer is: ${answer}`)
+    console.log(`The answer is: ${answer}`);
 
     let remainingLetter = answer.split("");
     let boxColors = [gray, gray, gray, gray, gray];
@@ -156,7 +156,6 @@ async function checkWord(rowBoxes) {
     }
 }
 
-
 function handleLetter(event, key) {
     event.preventDefault();
 
@@ -171,18 +170,16 @@ function handleLetter(event, key) {
 }
 
 function handleBackspace(event, index, box) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     if (box.value !== "") {
-        box.value = ""; 
+        box.value = "";
         removeLastLetter();
-    } 
-    
-    else if (index % 5 !== 0) { 
+    } else if (index % 5 !== 0) {
         const previousBox = letterBoxes[index - 1];
-        previousBox.value = ""; 
-        previousBox.focus();   
-        removeLastLetter();     
+        previousBox.value = "";
+        previousBox.focus();
+        removeLastLetter();
     }
 }
 
@@ -196,7 +193,7 @@ function handleEnter() {
     }
 }
 
-displayMessage("Click on the first box below to begin")
+displayMessage("Click on the first box below to begin");
 
 letterBoxes.forEach((box, index) => {
     box.addEventListener("keydown", function (event) {
@@ -214,7 +211,7 @@ letterBoxes.forEach((box, index) => {
         if (isLetter(key)) {
             handleLetter(event, key, index, box);
         } else if (key === "Backspace") {
-            handleBackspace(event,index, box);
+            handleBackspace(event, index, box);
         } else if (key === "Enter") {
             handleEnter();
         } else event.preventDefault();
