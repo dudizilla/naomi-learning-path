@@ -1,0 +1,195 @@
+*{
+    box-sizing: border-box;
+    font-family: 'Open Sans';
+    color: #412315;
+}
+
+header{
+    background-color: #412315;
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px;
+}
+
+body{
+    margin: 0;
+}
+
+.header__title{
+    color: #f5ebbb;
+    margin: 0;
+}
+
+.header__logo{
+    width: 30px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+.cart, .order-name, .order-payment{
+    background-color: #eee1d5;
+    padding: 20px 25px;
+    border-radius: 20px;
+}
+
+.cart__item{
+    display: flex;
+    padding: 20px 20px 10px 10px;
+    border-bottom: 3px solid #e9d5c2;
+    width: 95%;
+    margin-left: 10px;
+}
+
+.cart__list{
+    padding:0;
+}
+
+.cart__item-name{
+    margin: 0px 0px 4px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.cart__quantity{
+    padding-right: 20px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.cart__item-price{
+    margin-left: auto;
+    font-weight: bold;
+}
+
+.cart{
+    grid-area: item;
+}
+
+.order-name{
+    grid-area: name;
+}
+
+.order-payment{
+    grid-area: payment;
+    display: grid;
+    row-gap: 5px;
+    grid-template-areas: 
+    "payment-title payment-title"
+    "card-number card-number"
+    "exp-date ccv-card";
+}
+
+.total{
+    grid-area: total;
+    margin-top: 60px;
+    padding-top: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.order-page{
+    display: grid;
+    column-gap: 35px;
+    row-gap: 20px;
+    grid-template-areas: 
+    "item name"
+    "item payment"
+    "total total";
+    margin: 20px 10px;
+    padding: 20px;
+}
+
+.total__table{
+    width: 33%;
+    margin-bottom: 20px;
+}
+
+.total__price{
+    text-align: right;
+}
+
+.button{
+    width: 90%;
+    height: 40px;
+    border-radius: 25px;
+    border:none;
+    margin-bottom: 20px ;
+    background-color: #deb993;
+    font-size: 20px;
+}
+
+.button:hover{
+    font-weight: bold;
+    border: 3px solid #7d532bf1;
+}
+
+.field{
+    position: relative;
+    display: inline-block;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.field__label{
+    font-size: 13px;
+    position: absolute;
+    left: 15px;
+    top: -7px;
+    padding: 0 2px;
+    color: #412315e9;
+    background-color: #eee1d5;
+    padding: 0 5px;
+}
+
+.field__input{
+    border: 1px solid #8d6035;
+    background-color: #eee1d5;
+    width: 100%;
+    height: 38px;
+    border-radius: 20px;
+    padding-left: 15px;
+}
+
+.field--card-number{
+    grid-area: card-number;
+}
+
+.field--card-number .field__input{
+    grid-area: card-number;
+}
+
+.cart__item:last-child{
+    border: none;
+}
+
+.field--exp-date{
+    grid-area: exp-date;
+    padding-right: 5px;
+}
+
+.field--ccv{
+    grid-area: ccv-card;
+    padding-left: 5px;
+}
+
+.order-payment__title{
+    grid-area: payment-title;
+}
+
+.section-title{
+    margin: 4px 0 5px 3px;
+    padding: 0;
+}
+
+.cart__item-spec{
+    color: #8d6035f4;
+    margin: 0px;
+    font-size: 15px;
+}
+
+.total__row--total{
+    font-weight: bold;
+    padding-top: 15px;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Order Management</title>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <link rel="stylesheet" href="dynamicOrder.css"> </head>
+<body>
+    <header class="header">
+        <img class="header__logo" src="coffee_masters_logo.png" alt="Coffee Masters Logo"/>
+        <h2 class="header__title">Coffee Masters</h2>
+    </header>
+
+    <main class="order-page">
+        <section class="cart">
+            <h2 class="section-title">ITEMS</h2>
+            <ul class="cart__list">
+            </ul>
+        </section>
+
+        <section class="order-name">
+            <h2 class="section-title">NAME</h2>
+            <div class="field">
+                <label class="field__label" >Name for Order</label>
+                <input class="field__input" type="text" placeholder="Ford Prefect">
+            </div>
+        </section>
+
+        <section class="order-payment">
+            <h2 class="order-payment__title section-title">PAYMENT</h2>
+            <div class="field field--card-number">
+                <label class="field__label">CARD NUMBER</label>
+                <input class="field__input" type="text" placeholder="1234 5678 9012"/>
+            </div>
+            <div class="field field--exp-date">
+                <label class="field__label">EXP. DATE</label>
+                <input class="field__input" type="text" placeholder="MM/YY"/>
+            </div>
+            <div class="field field--ccv">
+                <label class="field__label">CCV</label>
+                <input class="field__input" type="text" placeholder="***"/>
+            </div>
+        </section>
+
+        <section class="total">
+            <table class="total__table">
+                <tr>
+                    <td>Subtotal:</td>
+                    <td class="total__price">R$ 12.50</td>
+                </tr>
+                <tr>
+                    <td>Tax:</td>
+                    <td class="total__price">R$ 0.00</td>
+                </tr>
+                <tr class="total__row--total">
+                    <td>Total:</td>
+                    <td class="total__price">R$ 12.50</td>
+                </tr>
+            </table>
+            <button class="button">Place Order</button>
+        </section>
+
+    </main>
+    <script src="dynamicOrder.js"></script>
+</body>
+</html>
