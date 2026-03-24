@@ -52,13 +52,14 @@ body{
 
 .cart__quantity{
     padding-right: 20px;
-    font-weight: bold;
     text-align: left;
+    display: flex;
+    align-items: center;
+    margin-bottom: auto ;
 }
 
 .cart__item-price{
     margin-left: auto;
-    font-weight: bold;
 }
 
 .cart{
@@ -67,6 +68,7 @@ body{
 
 .order-name{
     grid-area: name;
+    height: fit-content;
 }
 
 .order-payment{
@@ -81,7 +83,7 @@ body{
 
 .total{
     grid-area: total;
-    margin-top: 60px;
+    margin-top: 40px;
     padding-top: 10px;
     justify-content: center;
     align-items: center;
@@ -93,12 +95,27 @@ body{
     display: grid;
     column-gap: 35px;
     row-gap: 20px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-auto-flow: row;
     grid-template-areas: 
     "item name"
     "item payment"
     "total total";
     margin: 20px 10px;
     padding: 20px;
+}
+
+@media (max-width: 768px){
+    .order-page{
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas: 
+    "item"
+    "name"
+    "payment"
+    "total";
+}
 }
 
 .total__table{
@@ -110,19 +127,20 @@ body{
     text-align: right;
 }
 
-.button{
+.total__button{
     width: 90%;
-    height: 40px;
-    border-radius: 25px;
+    height: 50px;
+    border-radius: 18px;
     border:none;
     margin-bottom: 20px ;
+    margin-top: 15px;
     background-color: #deb993;
     font-size: 20px;
 }
 
-.button:hover{
+.total__button:hover{
     font-weight: bold;
-    border: 3px solid #7d532bf1;
+    border: 2px solid #7d532bf1;
 }
 
 .field{
@@ -192,4 +210,20 @@ body{
 .total__row--total{
     font-weight: bold;
     padding-top: 15px;
+}
+
+.cart__button{
+    width: 25px;
+    height: 30px;
+    border-radius: 8px;
+    border:none; 
+    font-weight: bold;
+    background-color: #deb993;
+    font-size: 20px;
+    text-align: center;
+    margin: 0 5px;
+}
+
+.cart__button:hover{
+    background-color: #e2bf9c;
 }

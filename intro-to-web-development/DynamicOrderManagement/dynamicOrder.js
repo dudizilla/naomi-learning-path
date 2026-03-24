@@ -34,14 +34,18 @@ function renderItems(items) {
         });
 
         const itemList = document.createElement("li");
-        itemList.innerHTML = ` <div class="cart__quantity"> ${item.quantity} </div>
+        itemList.innerHTML = ` 
+        <div class="cart__quantity"> 
+            <button class="cart__button">+</button>
+            <span>${item.quantity}</span>
+            <button class="cart__button">-</button>
+        </div>
         <div class="cart__item-middle"> 
-            <p class="cart__item-name"> ${item.name} </p>
-            <p class="cart__item-spec">  </p>
+            <p class="cart__item-name">${item.name}</p>
             ${ingredientsHTML}   
         </div>
-        <div class="cart__item-price"> R$ ${item.price.toFixed(2)}</div>
-    `;
+        <div class="cart__item-price">R$${item.price.toFixed(2)}</div> `;
+
         itemList.classList.add("cart__item");
 
         cartList.appendChild(itemList);
