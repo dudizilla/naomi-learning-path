@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> CSS Examples </title>
+    
+    <style>
+        .hover-example{
+           background-color: aquamarine; 
+           color: black;
+           width: 30%;
+           height: 30%;
+           font-size: 15px;
+        }
+        .hover-example:hover{
+           background-color: violet; 
+           color: blue;
+           width: 35%;
+           height: 40%;
+           font-size: 25px;
+        }
+
+        .first-child-example{
+            color: orange;
+            border-bottom: 1px solid black;
+        }
+
+        .first-child-example:first-child{
+            color: royalblue;
+        }
+
+        .first-child-example:last-child{
+            border-bottom: none;
+        }
+
+        ol{
+            width: 80%;
+        }
+
+        a:visited{
+            color: black;
+        }
+
+        a:hover{
+            color: aliceblue;
+        }
+
+       
+        button{
+            width: 90px;
+            height: 25px;
+            background-color: blanchedalmond;
+        }
+
+        button:hover{
+            width: 100px;
+            height: 30px;
+            background-color: black;
+            color: blanchedalmond;
+        }
+
+        .chapter::after {
+            content: "❦";
+            font-size: 20px;
+            text-align: center;
+            display: block;
+        }
+
+        .nth-child-example:nth-child(2n){
+            color: greenyellow;
+        }
+
+        .ex-box:hover{
+            background-color: #e38e8e;
+        }
+
+        .ex-box {
+            border: 3px solid #aaa;
+            background-color: #f1bfbf;
+            height: 200px;
+            width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            float: left;
+            margin-right: 10px;
+            border-radius: 5px;
+            font-size: 30px;
+        }
+
+        .ex-box:last-of-type{
+            margin-top: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+        
+        .box-1 {
+            border: 1px solid black;
+            color: white;
+            background-color: blue;
+            height: 150px;
+            width: 300px;
+        }
+
+        .box-2 {
+            border: 1px solid black;
+            color: white;
+            background-color: red;
+            height: 100px;
+            width: 300px;
+        }
+
+        .box-3 {
+            border: 1px solid black;
+            color: white;
+            background-color: green;
+            height: 200px;
+            width: 100px;
+        }
+
+        
+        .flex-container{
+            display: flex;
+            width: 80%;
+            border: 1px double black;
+        }
+
+        .jc-sa{
+            justify-content: space-around;
+        }
+        
+        .jc-sb{
+            justify-content: space-between;
+        }
+
+        .jc-right{
+            justify-content: flex-end;
+        }
+
+        .jc-center{
+            justify-content: center;
+        }
+
+        .fd-rev{
+            flex-direction: row-reverse;
+        }
+
+        .fd-col{
+            flex-direction:column;
+        }
+
+        .ai-fe{
+            align-items: flex-end;
+        }
+
+        .ai-center{
+            align-items: center;
+        }
+
+        .ai-stretch{
+            align-items: stretch;
+        }
+
+        .grid{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            row-gap: 10px;
+            column-gap: 10px;
+            align-items: center;
+        }
+
+        .grid-pic{
+            margin: 0px;
+            padding: 0px;
+            width: 100px;
+        }
+
+        .my-page-header {
+            grid-area: nav-header;
+            background-color: red;
+            padding: 10px;
+        }
+
+        .my-page-body {
+            grid-area: main-body;
+            background-color: blue;
+            padding: 10px;
+        }
+
+        .my-page-sidebar {
+            grid-area: nav-side;
+            background-color: green;
+            padding: 10px;
+        }
+
+        .my-page-footer {
+            grid-area: footer;
+            background-color: yellow;
+            padding: 10px;
+        }
+
+        .my-page {
+            display: grid;
+            grid-template-areas:
+            "nav-header  nav-header  nav-header  nav-side"
+            "main-body   main-body   .           nav-side"
+            "footer      footer      footer      footer";
+        }
+    </style>
+</head>
+<body>
+    <div class="hover-example">
+        Hover over this
+    </div>
+
+    <ol>
+        <li class="first-child-example"> First </li>
+        <li class="first-child-example"> Second </li>
+        <li class="first-child-example"> Third </li>
+    </ol>
+
+    <button> <a href="https://www.youtube.com"> Visit here!</a> </button>
+    
+
+    <div class="chapter"> One chapter </div>
+
+    <ol>
+        <li class="nth-child-example"> First </li>
+        <li class="nth-child-example"> Second </li>
+        <li class="nth-child-example"> Third </li>
+        <li class="nth-child-example"> Fourth </li>
+    </ol>
+
+    <div class="ex-box-container">
+        <div class="ex-box"> Box 1</div>
+        <div class="ex-box"> Box 2</div>
+        <div class="ex-box"> Box 3</div>
+    </div>
+
+    <h2> justify-content </h2>
+    <div class="flex-container jc-sa">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-sb">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-right">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container jc-center">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <h2> flex-direction</h2>
+    <div class="flex-container fd-rev">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container fd-col">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+    
+    <h2> align-items </h2>
+    <div class="flex-container ai-fe">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container ai-center">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <div class="flex-container ai-stretch">
+        <div class="box-1">1</div>
+        <div class="box-2">2</div>
+        <div class="box-3">3</div>
+    </div>
+
+    <h2> CSS Grid </h2>
+    <div class="grid">
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+        <img 
+            class="grid-pic"
+            src="et.png"
+            alt="et"
+        />
+    
+    </div>
+
+    <h2> Page Draft </h2>
+    <div class="my-page">
+        <header class="my-page-header">the header</header>
+        <div class="my-page-body">the body</div>
+        <div class="my-page-sidebar">the sidebar</div>
+        <footer class="my-page-footer">the footer</footer>
+    </div>
+
+
+</body>
+</html>

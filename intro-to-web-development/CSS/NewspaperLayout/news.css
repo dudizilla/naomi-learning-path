@@ -1,0 +1,86 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    padding: 20px;
+}
+
+.site-section{
+    font-family: "Futura";
+    color: rgb(72, 72, 72);
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.nav-links{
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+    align-items: center;
+    grid-area: nav;
+    margin: 0px;
+    padding: 20px 0px;
+}
+
+header{
+    grid-area: header;
+}
+
+.story-1{
+    grid-area: story-1;
+}
+
+.story-2{
+    grid-area: story-2;
+}
+
+.story-3{
+    grid-area: story-3;
+}
+
+.story-4{
+    grid-area: story-4;
+}
+
+.story-5{
+    grid-area: story-5;
+}
+
+.page{
+    display: grid;
+    padding: 10px;
+    grid-template-areas: 
+    "header header header"
+    "nav nav nav"
+    "story-1 story-2 story-3"
+    "story-4 story-5 story-5";
+}
+
+.page article, .nav-links{
+    border:2px solid black;
+}
+
+.page article{
+    text-align: center;
+    padding: 5px 15px;
+}
+
+.brand{
+    font-family: "Comic Sans";
+    font-size: 40px;
+    text-align: center;
+    border: none;
+}
+
+.article-img{
+    width: 100px;
+}
+
+.article-title{
+    font-style: italic;
+}
+
+.site-section:hover{
+    text-decoration: underline;
+}
