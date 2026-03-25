@@ -1,5 +1,5 @@
-VALIDATE_URL = "https://words.dev-apis.com/validate-word";
-WORD_URL = "https://words.dev-apis.com/word-of-the-day";
+const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
+const WORD_URL = "https://words.dev-apis.com/word-of-the-day";
 
 const yellow = "#edca03";
 const gray = "#988d8d";
@@ -10,20 +10,16 @@ let currentRow = 0;
 let word = "";
 let rowComplete = false;
 let gameOver = false;
+let answer = "";
 
 const letterBoxes = document.querySelectorAll(".letter-board__item");
 const restartButton = document.querySelector(".restart-button");
 const infoBlock = document.querySelector(".info-block");
 const messageWrapper = document.querySelector(".info-block__wrapper");
 const loader = document.querySelector(".loader");
-const heading2 = document.querySelector("h2");
 
 function isLetter(letter) {
     return /^[a-zA-Z]$/.test(letter);
-}
-
-function emptyWord() {
-    word = "";
 }
 
 function removeLastLetter() {
@@ -74,21 +70,26 @@ function restartGame() {
 }
 
 async function fetchWordOfTheDay() {
-    const promise = await fetch(WORD_URL);
-    const response = await promise.json();
-    const wordOfTheDay = String(response.word);
-    return wordOfTheDay;
+    try {
+        const fetchResponse = await fetch(WORD_URL);
+        const response = await fetchResponse.json();
+        const wordOfTheDay = String(response.word);
+        console.log(wordOfTheDay);
+        return wordOfTheDay;
+    } catch (error) {
+        hideLoader();
+        displayMessage("Error connecting to the server. Try again.");
+    }
 }
 
-async function isWordOfTheDay(row) {
+async function revealGuessResult(row) {
     const guess = word.toUpperCase();
-    const answer = (await fetchWordOfTheDay()).toUpperCase();
 
     let remainingLetter = answer.split("");
     let boxColors = [gray, gray, gray, gray, gray];
 
     for (let i = 0; i < 5; i++) {
-        if (guess[i] == answer[i]) {
+        if (guess[i] === answer[i]) {
             boxColors[i] = green;
             remainingLetter[i] = null;
         }
@@ -97,7 +98,7 @@ async function isWordOfTheDay(row) {
     for (let i = 0; i < 5; i++) {
         if (boxColors[i] === gray) {
             let indexAnswer = remainingLetter.indexOf(guess[i]);
-            if (indexAnswer != -1) {
+            if (indexAnswer !== -1) {
                 boxColors[i] = yellow;
                 remainingLetter[indexAnswer] = null;
             }
@@ -123,32 +124,36 @@ async function isWordOfTheDay(row) {
 }
 
 async function checkWord(rowBoxes) {
-    showLoader();
-    const promise = await fetch(VALIDATE_URL, {
-        method: "POST",
-        body: JSON.stringify({ word: word }),
-    });
+    try {
+        showLoader();
+        const fetchResponse = await fetch(VALIDATE_URL, {
+            method: "POST",
+            body: JSON.stringify({ word: word }),
+        });
 
-    const response = await promise.json();
+        const response = await fetchResponse.json();
 
-    if (response.validWord) {
-        await isWordOfTheDay(rowBoxes);
-        hideLoader();
-        currentRow++;
-        emptyWord();
-        if (currentRow < 6) {
-            letterBoxes[currentRow * 5].focus();
+        if (response.validWord) {
+            await revealGuessResult(rowBoxes);
+            currentRow++;
+            word = "";
+            if (currentRow < 6) {
+                letterBoxes[currentRow * 5].focus();
+            }
+        } else {
+            hideLoader();
+            displayMessage("Not a valid word! Try again.");
+            word = "";
+
+            for (let i = 0; i < 5; i++) {
+                rowBoxes[i].value = "";
+                letterBoxes[currentRow * 5].focus();
+            }
+            return;
         }
-    } else {
+    } catch (error) {
         hideLoader();
-        displayMessage("Not a valid word! Try again.");
-        emptyWord();
-
-        for (let i = 0; i < 5; i++) {
-            rowBoxes[i].value = "";
-            letterBoxes[currentRow * 5].focus();
-        }
-        return;
+        displayMessage("Error connecting to the server. Try again.");
     }
 }
 
@@ -188,26 +193,30 @@ function handleEnter() {
     }
 }
 
-displayMessage("Click on the first box below to begin");
+async function initializeGame() {
+    displayMessage("Click on the first box below to begin");
+    answer = (await fetchWordOfTheDay()).toUpperCase();
+    letterBoxes.forEach((box, index) => {
+        box.addEventListener("keydown", function (event) {
+            const key = event.key;
 
-letterBoxes.forEach((box, index) => {
-    box.addEventListener("keydown", function (event) {
-        const key = event.key;
+            clearMessage();
 
-        clearMessage();
+            const boxRow = Math.floor(index / 5);
 
-        const boxRow = Math.floor(index / 5);
-
-        if (gameOver || boxRow > currentRow || key === " ") {
-            event.preventDefault();
-            return;
-        }
-        if (isLetter(key)) {
-            handleLetter(event, key, index, box);
-        } else if (key === "Backspace") {
-            handleBackspace(event, index, box);
-        } else if (key === "Enter") {
-            handleEnter();
-        } else event.preventDefault();
+            if (gameOver || boxRow > currentRow || key === " ") {
+                event.preventDefault();
+                return;
+            }
+            if (isLetter(key)) {
+                handleLetter(event, key);
+            } else if (key === "Backspace") {
+                handleBackspace(event, index, box);
+            } else if (key === "Enter") {
+                handleEnter();
+            } else event.preventDefault();
+        });
     });
-});
+}
+
+initializeGame();
