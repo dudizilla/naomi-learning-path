@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+    <style>
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+             }
+        }
+
+        .spinny {
+            animation: spin 3s infinite linear;
+            display: inline-block;
+            font-size: 30px;
+        }
+
+        @keyframes rainbow {
+            100%,
+            0% {
+            color: rgb(220, 0, 0);
+            }
+            8% {
+            color: rgb(233, 117, 0);
+            }
+            16% {
+            color: rgb(233, 233, 0);
+            }
+            25% {
+            color: rgb(114, 226, 2);
+            }
+            33% {
+            color: rgb(1, 224, 1);
+            }
+            41% {
+            color: rgb(0, 255, 127);
+            }
+            50% {
+            color: rgb(0, 221, 221);
+            }
+            58% {
+            color: rgb(0, 98, 196);
+            }
+            66% {
+            color: rgb(0, 0, 174);
+            }
+            75% {
+            color: rgb(74, 1, 147);
+            }
+            83% {
+            color: rgb(176, 2, 176);
+            }
+            91% {
+            color: rgb(206, 0, 103);
+            }
+        }
+
+        .rainbowish {
+            animation: rainbow 5s infinite linear;
+            font-size: 30px;
+            margin-top: 10px;
+        }
+
+        @keyframes walk {
+            to{
+                translate: 100%;
+            }
+        }
+
+        .one-time-dancer{
+            animation: walk 6s 1 linear;
+        }
+    </style>
+</head>
+<body>
+
+    <div> Good Morning <span class="spinny"> ☀️ </span> </div>
+    
+    <div class="rainbowish">Rainbow</div>
+
+    <div class="one-time-dancer"> 💃 </div>
+
+</body>
+</html>
