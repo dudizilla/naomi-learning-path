@@ -1,5 +1,5 @@
 const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
-const WORD_URL = "https://words.dev-apis.com/word-of-the-day";
+const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
 
 const yellow = "#edca03";
 const gray = "#988d8d";
@@ -13,6 +13,7 @@ let gameOver = false;
 let answer = "";
 
 const letterBoxes = document.querySelectorAll(".letter-board__item");
+const letterBoard = document.querySelector(".letter-board");
 const restartButton = document.querySelector(".restart-button");
 const infoBlock = document.querySelector(".info-block");
 const messageWrapper = document.querySelector(".info-block__wrapper");
@@ -196,13 +197,16 @@ function handleEnter() {
 async function initializeGame() {
     displayMessage("Click on the first box below to begin");
     answer = (await fetchWordOfTheDay()).toUpperCase();
-    letterBoxes.forEach((box, index) => {
-        box.addEventListener("keydown", function (event) {
-            const key = event.key;
 
-            clearMessage();
+    const letterBoxesArray = Array.from(letterBoxes);
 
-            const boxRow = Math.floor(index / 5);
+    letterBoard.addEventListener("keydown",function(event) {
+        const box = event.target;
+        const key = event.key;
+        const index = letterBoxesArray.indexOf(box);
+
+        clearMessage();
+        const boxRow = Math.floor(index / 5);
 
             if (gameOver || boxRow > currentRow || key === " ") {
                 event.preventDefault();
@@ -215,7 +219,7 @@ async function initializeGame() {
             } else if (key === "Enter") {
                 handleEnter();
             } else event.preventDefault();
-        });
+
     });
 }
 
