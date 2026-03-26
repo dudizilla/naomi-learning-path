@@ -20,43 +20,50 @@ const cart = [
         price: 9.9,
         quantity: 1,
     },
-    //{ id: 4, name: "Cookie", ingredients: [], price: 4.5, quantity: 3 },
+    {
+        id: 4,
+        name: "Cookie",
+        ingredients: ["Extra Chocolate Chips"],
+        price: 4.5,
+        quantity: 3,
+    },
+    {
+        id: 5,
+        name: "Orange Juice",
+        ingredients: [],
+        price:10,
+        quantity: 1,
+    }
 ];
 
 const cartList = document.querySelector(".cart__list");
 let orderSum = 0;
 
-function showFinalValues(){
-        const subtotal = document.querySelector(".total__subtotal");
-    const subtotalValue = document.createElement("td");
-    subtotalValue.classList.add("total__price");
-    subtotalValue.innerText = orderSum.toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-    });
-    subtotal.appendChild(subtotalValue);
+function calculateTotals() {
+    const updateRow = (rowClass, value) => {
+        const row = document.querySelector(rowClass);
+        let rowValue = row.querySelector(".total__price");
 
-    const tax = document.querySelector(".total__tax");
-    const taxValue = document.createElement("td");
-    taxValue.classList.add("total__price");
-    taxValue.innerText = (orderSum*0.08).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-    });
-    tax.appendChild(taxValue);
+        if (!rowValue) {
+            rowValue = document.createElement("td");
+            rowValue.classList.add("total__price");
+            row.appendChild(rowValue);
+        }
+        rowValue.innerText = value.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        });
+    };
 
-    const total = document.querySelector(".total__row--total");
-    const totalValue = document.createElement("td");
-    totalValue.classList.add("total__price");
-    totalValue.innerText = (orderSum*1.08).toLocaleString("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-    });
-   total.appendChild(totalValue);
+    updateRow(".total__subtotal", orderSum);
+    updateRow(".total__tax", orderSum * 0.085);
+    updateRow(".total__row--total", orderSum * 1.085);
 }
 
 function renderItems(items) {
-    
+    cartList.innerHTML = "";
+    orderSum = 0;
+
     items.forEach((item) => {
         let ingredientsHTML = "";
 
@@ -72,9 +79,9 @@ function renderItems(items) {
         const itemList = document.createElement("li");
         itemList.innerHTML = ` 
         <div class="cart__quantity"> 
-            <button class="cart__button">+</button>
+            <button class="cart__button" data-item-id="${item.id}">+</button>
             <span>${item.quantity}</span>
-            <button class="cart__button">-</button>
+            <button class="cart__button" data-item-id="${item.id}">-</button>
         </div>
         <div class="cart__item-middle"> 
             <p class="cart__item-name">${item.name}</p>
@@ -87,21 +94,41 @@ function renderItems(items) {
         cartList.appendChild(itemList);
         orderSum += parseInt(item.quantity) * parseFloat(item.price);
     });
+
+    calculateTotals();
+}
+
+function removeItem(id) {
+    const index = cart.findIndex(item => item.id === id);
+    if (index === -1) {
+        return;
+    }
+    cart.splice(index, 1);
 }
 
 renderItems(cart);
-showFinalValues();
 
 cartList.addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
-        let buttonValue = event.target.innerText;
-
         const button = event.target;
-        const parent = button.parentElement;
-        const sibling = parent.querySelector("span");
-        console.log(sibling, sibling.innerText)
+        const buttonValue = button.innerText;
+
+        const itemId = parseInt(button.dataset.itemId);
+        const item = cart.find((item) => item.id === itemId);
+
         if (buttonValue === "+") {
-            console.log("aqui aumenta");
-        } else console.log("aqui abaixa");
+            item.quantity += 1;
+            console.log(item);
+        } else if (buttonValue === "-"){
+            if (item.quantity >= 1) {
+                item.quantity -= 1;
+                console.log(item);
+            }
+            if (item.quantity === 0) {
+                removeItem(itemId);
+                console.log(cart);
+            }
+        }
+        renderItems(cart);
     }
 });
