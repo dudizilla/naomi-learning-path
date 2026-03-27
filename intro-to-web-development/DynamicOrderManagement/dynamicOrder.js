@@ -1,4 +1,4 @@
-const cart = [
+const initialCart = [
     {
         id: 1,
         name: "Cappuccino",
@@ -38,8 +38,23 @@ const cart = [
 
 const cartList = document.querySelector(".cart__list");
 
-function calculateTotals(items){
-    return items.reduce((sum, item) => sum + (item.quantity * item.price), 0)
+const saveCart = () => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+};
+
+const loadCart = () => {
+    const saved = localStorage.getItem("cart");
+    if (saved) {
+        console.log(JSON.parse(saved));
+        return JSON.parse(saved);
+    }
+    return structuredClone(initialCart);
+};
+
+let cart = loadCart();
+
+function calculateTotals(items) {
+    return items.reduce((sum, item) => sum + item.quantity * item.price, 0);
 }
 
 function showTotals() {
@@ -73,6 +88,14 @@ function renderItems(items) {
         message.classList.add("cart__message");
         message.innerText = "You have no items in the cart :(";
         cartList.appendChild(message);
+
+        const restartButton = document.createElement("button");
+        restartButton.classList.add("cart__button");
+        restartButton.classList.add("cart__button--large");
+        restartButton.innerText = "Restart";
+        cartList.appendChild(restartButton);
+        showTotals();
+        return;
     }
 
     items.forEach((item) => {
@@ -109,11 +132,7 @@ function renderItems(items) {
 }
 
 function removeItem(id) {
-    const index = cart.findIndex((item) => item.id === id);
-    if (index === -1) {
-        return;
-    }
-    cart.splice(index, 1);
+    cart = cart.filter((item) => item.id !== id);
 }
 
 renderItems(cart);
@@ -127,17 +146,19 @@ cartList.addEventListener("click", (event) => {
 
         if (buttonValue === "+") {
             item.quantity += 1;
-            console.log(item);
+            console.log("mais um", item);
         } else if (buttonValue === "-") {
             if (item.quantity >= 1) {
                 item.quantity -= 1;
-                console.log(item);
             }
             if (item.quantity === 0) {
                 removeItem(itemId);
-                console.log(cart);
             }
+        } else if (buttonValue === "Restart") {
+            localStorage.removeItem("cart");
+            cart = structuredClone(initialCart);
         }
         renderItems(cart);
+        saveCart();
     }
 });
