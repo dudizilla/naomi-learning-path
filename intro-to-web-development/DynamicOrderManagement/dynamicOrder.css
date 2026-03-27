@@ -109,11 +109,12 @@ body{
     column-gap: 35px;
     row-gap: 20px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: max-content max-content 1fr auto;
     grid-auto-flow: row;
     grid-template-areas: 
     "item name"
     "item payment"
+    "item ."
     "total total";
     margin: 20px 10px;
     padding: 20px;
