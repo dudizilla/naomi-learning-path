@@ -37,9 +37,14 @@ const cart = [
 ];
 
 const cartList = document.querySelector(".cart__list");
-let orderSum = 0;
 
-function calculateTotals() {
+function calculateTotals(items){
+    return items.reduce((sum, item) => sum + (item.quantity * item.price), 0)
+}
+
+function showTotals() {
+    const orderSum = calculateTotals(cart);
+
     const updateRow = (rowClass, value) => {
         const row = document.querySelector(rowClass);
         let rowValue = row.querySelector(".total__price");
@@ -62,7 +67,6 @@ function calculateTotals() {
 
 function renderItems(items) {
     cartList.innerHTML = "";
-    orderSum = 0;
 
     if (items.length === 0) {
         const message = document.createElement("h3");
@@ -99,10 +103,9 @@ function renderItems(items) {
         itemList.classList.add("cart__item");
 
         cartList.appendChild(itemList);
-        orderSum += parseInt(item.quantity) * parseFloat(item.price);
     });
 
-    calculateTotals();
+    showTotals();
 }
 
 function removeItem(id) {
@@ -114,7 +117,6 @@ function removeItem(id) {
 }
 
 renderItems(cart);
-
 cartList.addEventListener("click", (event) => {
     if (event.target.tagName === "BUTTON") {
         const button = event.target;
