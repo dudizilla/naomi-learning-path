@@ -31,9 +31,9 @@ const cart = [
         id: 5,
         name: "Orange Juice",
         ingredients: [],
-        price:10,
+        price: 10,
         quantity: 1,
-    }
+    },
 ];
 
 const cartList = document.querySelector(".cart__list");
@@ -63,6 +63,13 @@ function calculateTotals() {
 function renderItems(items) {
     cartList.innerHTML = "";
     orderSum = 0;
+
+    if (items.length === 0) {
+        const message = document.createElement("h3");
+        message.classList.add("cart__message");
+        message.innerText = "You have no items in the cart :(";
+        cartList.appendChild(message);
+    }
 
     items.forEach((item) => {
         let ingredientsHTML = "";
@@ -99,7 +106,7 @@ function renderItems(items) {
 }
 
 function removeItem(id) {
-    const index = cart.findIndex(item => item.id === id);
+    const index = cart.findIndex((item) => item.id === id);
     if (index === -1) {
         return;
     }
@@ -119,7 +126,7 @@ cartList.addEventListener("click", (event) => {
         if (buttonValue === "+") {
             item.quantity += 1;
             console.log(item);
-        } else if (buttonValue === "-"){
+        } else if (buttonValue === "-") {
             if (item.quantity >= 1) {
                 item.quantity -= 1;
                 console.log(item);
