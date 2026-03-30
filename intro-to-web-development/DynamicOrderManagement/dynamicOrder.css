@@ -6,11 +6,11 @@
 
 :root{
     --dark-brown: #412315;
-    --dark-beige: #eee1d5;
+    --background-beige: #eee1d5;
     --text-beige:  #f5ebbb;
     --border-beige: #e9d5c2;
     --light-brown: #deb993;
-    --lighter-brown: #e4bc94;
+    --light-brown-hover: #e4bc94;
     --text-medium-brown: #8d6035f4;
 }
 
@@ -37,7 +37,7 @@ body{
 }
 
 .cart, .order-name, .order-payment{
-    background-color: var(--dark-beige);
+    background-color: var(--background-beige);
     padding: 20px 25px;
     border-radius: 20px;
 }
@@ -155,7 +155,7 @@ body{
 .total__button:hover{
     font-weight: bold;
     border: 2px solid var(--dark-brown);
-    background-color: var(--lighter-brown);
+    background-color: var(--light-brown-hover);
     box-shadow: 6px 4px 24px -9px rgba(0,0,0,0.76);
 }
 
@@ -173,13 +173,13 @@ body{
     top: -7px;
     padding: 0 2px;
     color: var(--dark-brown);
-    background-color: var(--dark-beige);
+    background-color: var(--background-beige);
     padding: 0 5px;
 }
 
 .field__input{
     border: 1px solid var(--dark-brown);
-    background-color: var(--dark-beige);
+    background-color: var(--background-beige);
     width: 100%;
     height: 38px;
     border-radius: 20px;
@@ -241,7 +241,7 @@ body{
 }
 
 .cart__button:hover{
-    background-color: var(--lighter-brown);
+    background-color: var(--light-brown-hover);
     box-shadow: 6px 4px 24px -9px rgba(0,0,0,0.76);
 }
 
@@ -256,4 +256,8 @@ body{
     font-weight: lighter;
     height: fit-content;
     padding: 10px;
+}
+
+.cart__span{
+    margin: 0 5px;
 }

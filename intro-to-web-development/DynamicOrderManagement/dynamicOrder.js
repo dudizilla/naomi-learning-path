@@ -114,7 +114,7 @@ function renderItems(items) {
         itemList.innerHTML = ` 
         <div class="cart__quantity"> 
             <button class="cart__button" data-item-id="${item.id}">+</button>
-            <span>${item.quantity}</span>
+            <span class="cart__span">${item.quantity}</span>
             <button class="cart__button" data-item-id="${item.id}">-</button>
         </div>
         <div class="cart__item-middle"> 
