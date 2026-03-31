@@ -1,7 +1,6 @@
 .letter-board {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     width: 100%;
     max-width: 350px;
     margin: 20px auto 0;
@@ -9,8 +8,9 @@
 }
 
 .letter-board__item {
-    width: 50px;
-    height: 60px;
+    box-sizing: border-box;
+    width: 100%; 
+    height: 60px; 
     border: 4px solid #cccccc;
     text-transform: uppercase;
     font-size: 50px;
