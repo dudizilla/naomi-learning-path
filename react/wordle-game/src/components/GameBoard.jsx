@@ -1,38 +1,39 @@
 import "@/styles/GameBoard.css";
+import LetterTile from "./LetterTile";
 
 export default function GameBoard() {
     return (
         <section className="letter-board">
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
-            <input type="text" className="letter-board__item" maxLength="1" />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
+            <LetterTile />
         </section>
     );
 }
