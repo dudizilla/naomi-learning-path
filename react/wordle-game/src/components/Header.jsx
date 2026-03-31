@@ -1,4 +1,4 @@
-import styles from '@/styles/Header.module.css'; 
+import '@/styles/Header.css'; 
 
 export default function Header(){
     return (
@@ -6,4 +6,4 @@ export default function Header(){
             <h1 className="page-header__title"> Wordle Game </h1>
         </header>
     )
-}
+}   
