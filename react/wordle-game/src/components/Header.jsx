@@ -1,0 +1,9 @@
+import styles from '@/styles/Header.module.css'; 
+
+export default function Header(){
+    return (
+        <header className="page-header">
+            <h1 className="page-header__title"> Wordle Game </h1>
+        </header>
+    )
+}
