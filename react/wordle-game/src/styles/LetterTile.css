@@ -13,3 +13,20 @@
 .letter-board__item:focus {
     outline: none;
 }
+
+.correct {
+    background-color: var(--green);
+}
+
+.present {
+    background-color: var(--yellow);
+}
+
+.absent {
+    background-color: var(--gray);
+    color: var(--whiteishText);
+}
+
+.empty {
+    background-color: transparent;
+}

@@ -1,6 +1,7 @@
 import Header from "./Header"
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
+import Keyboard from "./Keyboard";
 import "@/styles/App.css"
 
 export default function App() {
@@ -9,6 +10,7 @@ export default function App() {
     <Header/>
     <InfoBlock/>
     <GameBoard/>
+    <Keyboard/>
     </>
   );
 }

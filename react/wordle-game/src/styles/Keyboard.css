@@ -1,0 +1,28 @@
+.keyboard{
+    margin: 25px auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-keyboard);
+    padding: 15px 28px;
+    border-radius: 15px;
+    border: 2px solid var(--keyboard-border);
+}
+
+.keyboard__button{
+    box-sizing: border-box;
+    height: 50px;
+    width: 45px;
+    margin: 2px;
+    background-color: var(--bg-button);
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    font-size: 20px;
+    color: rgb(66, 66, 66);
+}
+
+
+.special-key{
+    width: fit-content;
+    padding: 0 25px;
+}

@@ -1,6 +1,6 @@
 .info-block {
     text-align: center;
-    height: 42px;
+    height: 20px;
     margin: 10px 30px;
 }
 
@@ -56,5 +56,5 @@
 }
 
 .info-block__wrapper{
-    height: 48px;
+    height: 30px;
 }
