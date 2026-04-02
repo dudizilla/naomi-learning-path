@@ -1,11 +1,11 @@
 "use client";
 import "@/styles/Keyboard.css";
 
-export default function Keyboard() {
+export default function Keyboard(handleKeyPress) {
     const keyboardLayout = [
-        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BACKSPACE"],
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
         ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-        ["ENTER", "Z", "X", "C", "V", "B", "N", "M"],
+        ["ENTER", "Z", "X", "C", "V", "B", "N", "M",  "BACKSPACE"],
     ];
 
     function handleLetter(letter) {

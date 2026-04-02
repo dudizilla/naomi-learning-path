@@ -1,10 +1,13 @@
 :root {
-    --yellow: #edca03;
-    --gray: #988d8d;
-    --green: #0b750b;
-    --whiteishText: #ebe7e7;
-    --bg-keyboard: #efe8e4;
-    --bg-button: #fbf6f3;
-    --button-border: #9d9893;
-    --keyboard-border: #c6beb9;
+    --yellow: #CEB02C;
+    --gray: #939B9F;
+    --green: #66A060;
+    --white: #FFFFFF;
+    --bg-button: #D3D6DA;
+    --text: #56575E;
+    --bg-empty: #939B9F4D;
+}
+
+body {
+  font-family: var(--font-roboto), sans-serif;
 }

@@ -1,3 +1,4 @@
+"use client"
 import Header from "./Header"
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
