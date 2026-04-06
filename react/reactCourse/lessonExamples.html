@@ -136,6 +136,7 @@
 
                 return (
                     <div>
+                        <h3> Lesson 14</h3>
                         <form>
                             <label htmlFor="name-v2">Name: </label>
                             <input
@@ -194,6 +195,7 @@
 
                 React.useEffect(() => {
                     const tiltNode = tiltRef.current;
+                    console.log(tiltNode);
                     const vanillaTiltOptions = {
                         max: 25,
                         speed: 400,
@@ -204,6 +206,7 @@
 
                     return () => {
                         tiltNode.vanillaTilt.destroy();
+                        console.log("vanilla tilt was destroyed");
                     };
                 }, []);
 
@@ -221,7 +224,7 @@
                 const [showTilt, setShowTilt] = React.useState(true);
                 return (
                     <div>
-                        <h3>Lesson 18: Vanilla Tilt (Refs & DOM nodes)</h3>
+                        <h3>Lesson 18: Vanilla Tilt </h3>
                         <label>
                             <input
                                 type="checkbox"
@@ -243,6 +246,275 @@
                 );
             }
 
+            // Lesson 19
+            function Child() {
+                console.log(
+                    "%c    Child: render start",
+                    "color: MediumSpringGreen",
+                );
+
+                const [count, setCount] = React.useState(() => {
+                    console.log(
+                        "%c    Child: useState callback",
+                        "color: tomato",
+                    );
+                    return 0;
+                });
+
+                React.useEffect(() => {
+                    console.log(
+                        "%c    Child: useEffect no deps",
+                        "color: LightCoral",
+                    );
+                    return () => {
+                        console.log(
+                            "%c    Child: useEffect no deps cleanup",
+                            "color: LightCoral",
+                        );
+                    };
+                });
+
+                React.useEffect(() => {
+                    console.log(
+                        "%c    Child: useEffect empty deps",
+                        "color: MediumTurquoise",
+                    );
+                    return () => {
+                        console.log(
+                            "%c    Child: useEffect empty deps cleanup",
+                            "color: MediumTurquoise",
+                        );
+                    };
+                }, []);
+
+                React.useEffect(() => {
+                    console.log(
+                        "%c    Child: useEffect with dep",
+                        "color: HotPink",
+                    );
+                    return () => {
+                        console.log(
+                            "%c    Child: useEffect with dep cleanup",
+                            "color: HotPink",
+                        );
+                    };
+                }, [count]);
+
+                const element = (
+                    <button
+                        onClick={() =>
+                            setCount((previousCount) => previousCount + 1)
+                        }
+                    >
+                        {count}
+                    </button>
+                );
+
+                console.log(
+                    "%c    Child: render end",
+                    "color: MediumSpringGreen",
+                );
+
+                return element;
+            }
+
+            function App2() {
+                console.log("%cApp: render start", "color: MediumSpringGreen");
+
+                const [showChild, setShowChild] = React.useState(() => {
+                    console.log("%cApp: useState callback", "color: tomato");
+                    return false;
+                });
+
+                React.useEffect(() => {
+                    console.log(
+                        "%cApp: useEffect no deps",
+                        "color: LightCoral",
+                    );
+                    return () => {
+                        console.log(
+                            "%cApp: useEffect no deps cleanup",
+                            "color: LightCoral",
+                        );
+                    };
+                });
+
+                React.useEffect(() => {
+                    console.log(
+                        "%cApp: useEffect empty deps",
+                        "color: MediumTurquoise",
+                    );
+                    return () => {
+                        console.log(
+                            "%cApp: useEffect empty deps cleanup",
+                            "color: MediumTurquoise",
+                        );
+                    };
+                }, []);
+
+                React.useEffect(() => {
+                    console.log("%cApp: useEffect with dep", "color: HotPink");
+                    return () => {
+                        console.log(
+                            "%cApp: useEffect with dep cleanup",
+                            "color: HotPink",
+                        );
+                    };
+                }, [showChild]);
+
+                const element = (
+                    <>
+                        {" "}
+                        <h3> Lesson 19</h3>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={showChild}
+                                onChange={(e) => setShowChild(e.target.checked)}
+                            />{" "}
+                            show child
+                        </label>
+                        <div
+                            style={{
+                                padding: 10,
+                                margin: 10,
+                                height: 30,
+                                width: 30,
+                                border: "solid",
+                            }}
+                        >
+                            {showChild ? <Child /> : null}
+                        </div>
+                    </>
+                );
+
+                console.log("%cApp: render end", "color: MediumSpringGreen");
+
+                return element;
+            }
+
+            //Lesson 20
+            function UsernameForm() {
+                const usernameInput = React.useRef();
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    // const username = event.target.elements.usernameInput.value;
+                    const username = usernameInput.current.value;
+                    alert(`You entered ${username}`);
+                }
+
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <h3> Lesson 20</h3>
+                        <div>
+                            <label htmlFor="usernameInput"> Username:</label>
+                            <input
+                                id="usernameInput"
+                                type="text"
+                                ref={usernameInput}
+                            />
+                        </div>
+                        <button type="submit"> Submit </button>
+                    </form>
+                );
+            }
+
+            //Lesson 21
+            function UsernameForm2() {
+                const usernameInput = React.useRef();
+
+                const [username, setUsername] = React.useState("");
+                const isLowerCase = username === username.toLowerCase();
+                const error = isLowerCase ? null : "Username must be lowercase";
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    // const username = event.target.elements.usernameInput.value;
+                    const username = usernameInput.current.value;
+                    alert(`You entered ${username}`);
+                }
+
+                function handleChange(event) {
+                    setUsername(event.target.value);
+                }
+
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <h3> Lesson 21</h3>
+                        <div>
+                            <label htmlFor="usernameInput"> Username:</label>
+                            <input
+                                id="usernameInput"
+                                type="text"
+                                ref={usernameInput}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div style={{ color: "red" }}>{error}</div>
+                        <button
+                            disabled={Boolean(error)}
+                            type="submit"
+                        >
+                            Submit
+                        </button>
+                    </form>
+                );
+            }
+
+            //Lesson 22
+            function UsernameForm3() {
+                // const usernameInput = React.useRef();
+
+                const [username, setUsername] = React.useState("");
+
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    // const username = usernameInput.current.value;
+                    alert(`You entered ${username}`);
+                }
+
+                function handleChange(event) {
+                    setUsername(event.target.value.toLowerCase());
+                }
+
+                return (
+                    <form onSubmit={handleSubmit}>
+                        <h3> Lesson 22</h3>
+                        <div>
+                            <label htmlFor="usernameInput"> Username:</label>
+                            <input
+                                id="usernameInput"
+                                type="text"
+                                /*ref={usernameInput}*/
+                                onChange={handleChange}
+                                value={username}
+                            />
+                        </div>
+                        <button type="submit">Submit</button>
+                    </form>
+                );
+            }
+
+            // Lesson 23
+            const ErrorBoundary = ReactErrorBoundary.ErrorBoundary
+            function Bomb() {
+                throw new Error(" 💥 KABOO00MMM! 💥");
+            }
+
+            function App3() {
+                const [explode, setExplode] = React.useState(false);
+                return (
+                    <div>
+                        <h3> Lesson 23 </h3>
+                        <div>
+                            <button onClick={() => setExplode(true)}>💣</button>
+                        </div>
+                        <div>
+                            <ErrorBoundary> {explode ? <Bomb /> : "Push the button to the max!"} </ErrorBoundary>
+                        </div>
+                    </div>
+                );
+            }
+
             function Main() {
                 return (
                     <div>
@@ -256,11 +528,25 @@
                         <GreetingV3 />
                         <hr />
                         <TiltApp />
+                        <hr />
+                        <App2 />
+                        <hr />
+                        <UsernameForm />
+                        <hr />
+                        <UsernameForm2 />
+                        <hr />
+                        <UsernameForm3 />
+                        <hr />
+                        <App3 />
                     </div>
                 );
             }
 
-            ReactDOM.render(<Main />, document.getElementById("root"));
+            function renderApp() {
+                ReactDOM.render(<Main />, document.getElementById("root"));
+            }
+
+            renderApp();
         </script>
     </body>
 </html>
