@@ -1,24 +1,18 @@
 "use client";
 import "@/styles/Keyboard.css";
 
-export default function Keyboard(handleKeyPress) {
+// Notice the curly braces around onKeyPress!
+export default function Keyboard({ onKeyPress }) {
     const keyboardLayout = [
         ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
         ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
         ["ENTER", "Z", "X", "C", "V", "B", "N", "M",  "BACKSPACE"],
     ];
 
-    function handleLetter(letter) {
-        console.log(letter);
-    }
-
     return (
         <section className="keyboard">
-            {keyboardLayout.map((row) => (
-                <div
-                    key={row}
-                    className="row"
-                >
+            {keyboardLayout.map((row, rowIndex) => (
+                <div key={rowIndex} className="row">
                     {row.map((letter) => (
                         <button
                             className={`keyboard__button ${
@@ -27,7 +21,7 @@ export default function Keyboard(handleKeyPress) {
                                     : "normal-key"
                             }`}
                             key={letter}
-                            onClick={() => handleLetter(letter)}
+                            onClick={() => onKeyPress(letter)}
                         >
                             {letter}
                         </button>

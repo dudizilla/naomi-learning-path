@@ -9,6 +9,7 @@
     caret-color: transparent;
     text-align: center;
     color: var(--text);
+    border-radius: 5px;
 }
 
 .letter-board__item:focus {
