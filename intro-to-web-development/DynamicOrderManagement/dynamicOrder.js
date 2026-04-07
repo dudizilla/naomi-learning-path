@@ -63,6 +63,7 @@ function showTotals() {
 
     const updateRow = (rowClass, value) => {
         const row = document.querySelector(rowClass);
+        if (!row) return;
         let rowValue = row.querySelector(".total__price");
 
         if (!rowValue) {
@@ -147,7 +148,6 @@ cartList.addEventListener("click", (event) => {
 
         if (buttonValue === "+") {
             item.quantity += 1;
-            console.log("mais um", item);
         } else if (buttonValue === "-") {
             if (item.quantity >= 1) {
                 item.quantity -= 1;
