@@ -8,14 +8,12 @@ const whiteishText = "#ebe7e7";
 
 let currentRow = 0;
 let word = "";
-let rowComplete = false;
 let gameOver = false;
 let answer = "";
 
 const letterBoxes = document.querySelectorAll(".letter-board__item");
 const letterBoard = document.querySelector(".letter-board");
 const restartButton = document.querySelector(".restart-button");
-const infoBlock = document.querySelector(".info-block");
 const messageWrapper = document.querySelector(".info-block__wrapper");
 const loader = document.querySelector(".loader");
 
@@ -75,7 +73,6 @@ async function fetchWordOfTheDay() {
         const fetchResponse = await fetch(WORD_URL);
         const response = await fetchResponse.json();
         const wordOfTheDay = String(response.word);
-        console.log(wordOfTheDay);
         return wordOfTheDay;
     } catch (error) {
         hideLoader();
