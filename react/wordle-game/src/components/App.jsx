@@ -7,10 +7,8 @@ import Keyboard from "./Keyboard";
 import "@/styles/App.css";
 
 export default function App() {
+    const initialBoard = Array.from({ length: 6 }, () => Array(5).fill(""));
 
-  const initialBoard = Array.from({ length: 6 }, () => Array(5).fill(""));
-
-    // 1. Centralized State
     const [tiles, setTiles] = useState(initialBoard);
     const [currentRow, setCurrentRow] = useState(0);
     const [currentCol, setCurrentCol] = useState(0);
@@ -25,14 +23,20 @@ export default function App() {
                 setTiles(newTiles);
                 setCurrentCol(currentCol - 1);
             }
-        } else if (key === "ENTER") {
-            if (currentCol === 5) {
-                // TODO: Add word validation here
-                setCurrentRow(currentRow + 1);
-                setCurrentCol(0);
-            }
-        } else {
+        } 
+        else if (key === "ENTER") {
+            // TODO: Add word validation
+            // if (currentCol === 5) {
+            //     setCurrentRow(currentRow + 1);
+            //     setCurrentCol(0);
+            // }
+        } 
+        else {
             if (currentCol < 5) {
+                const isLetter = /^[a-zA-Z]$/.test(key);
+                if (!isLetter) {
+                    return;
+                }
                 const newTiles = structuredClone(tiles);
                 newTiles[currentRow][currentCol] = key;
                 setTiles(newTiles);
@@ -41,18 +45,17 @@ export default function App() {
         }
     };
 
-    useEffect(()=>{
-      const handlePhysicalKey = event => {
-        const key = event.key.toUpperCase()
-        handleKeyPress(key)
-      }
-      window.addEventListener('keydown', handlePhysicalKey);
+    useEffect(() => {
+        const handlePhysicalKey = (event) => {
+            const key = event.key.toUpperCase();
+            handleKeyPress(key);
+        };
+        window.addEventListener("keydown", handlePhysicalKey);
 
-      return () => {
-        window.removeEventListener('keydown', handlePhysicalKey);
-      }
-
-    }, [tiles])
+        return () => {
+            window.removeEventListener("keydown", handlePhysicalKey);
+        };
+    }, [tiles]);
 
     return (
         <>

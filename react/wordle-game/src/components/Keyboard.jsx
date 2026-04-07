@@ -1,7 +1,6 @@
 "use client";
 import "@/styles/Keyboard.css";
 
-// Notice the curly braces around onKeyPress!
 export default function Keyboard({ onKeyPress }) {
     const keyboardLayout = [
         ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
