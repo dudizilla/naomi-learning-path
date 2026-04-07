@@ -10,6 +10,7 @@ export default function App() {
     const initialBoard = Array.from({ length: 6 }, () => Array(5).fill(""));
 
     const [tiles, setTiles] = useState(initialBoard);
+    const [guess, setGuess] = useState([]);
     const [currentRow, setCurrentRow] = useState(0);
     const [currentCol, setCurrentCol] = useState(0);
 
@@ -20,18 +21,20 @@ export default function App() {
             if (currentCol > 0) {
                 const newTiles = structuredClone(tiles);
                 newTiles[currentRow][currentCol - 1] = "";
+                const newGuess = [...guess];
+                newGuess.pop();
+                setGuess(newGuess);
                 setTiles(newTiles);
                 setCurrentCol(currentCol - 1);
             }
-        } 
-        else if (key === "ENTER") {
-            // TODO: Add word validation
-            // if (currentCol === 5) {
-            //     setCurrentRow(currentRow + 1);
-            //     setCurrentCol(0);
-            // }
-        } 
-        else {
+        } else if (key === "ENTER") {
+            //TODO: Add word validation
+            if (currentCol === 5) {
+                setCurrentRow(currentRow + 1);
+                setGuess([]);
+                setCurrentCol(0);
+            }
+        } else {
             if (currentCol < 5) {
                 const isLetter = /^[a-zA-Z]$/.test(key);
                 if (!isLetter) {
@@ -39,6 +42,7 @@ export default function App() {
                 }
                 const newTiles = structuredClone(tiles);
                 newTiles[currentRow][currentCol] = key;
+                setGuess([...guess, key]);
                 setTiles(newTiles);
                 setCurrentCol(currentCol + 1);
             }
