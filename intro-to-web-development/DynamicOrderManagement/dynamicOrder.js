@@ -44,11 +44,12 @@ const saveCart = () => {
 
 const loadCart = () => {
     const saved = localStorage.getItem("cart");
-    if (saved) {
-        console.log(JSON.parse(saved));
+    if (!saved) return structuredClone(initialCart);
+    try {
         return JSON.parse(saved);
+    } catch {
+        return structuredClone(initialCart);
     }
-    return structuredClone(initialCart);
 };
 
 let cart = loadCart();
