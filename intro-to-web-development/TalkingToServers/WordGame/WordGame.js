@@ -196,7 +196,9 @@ function handleEnter() {
 
 async function initializeGame() {
     displayMessage("Click on the first box below to begin");
-    answer = (await fetchWordOfTheDay()).toUpperCase();
+   const wordOfTheDay = await fetchWordOfTheDay();
+    if (!wordOfTheDay) return;
+    answer = wordOfTheDay.toUpperCase();
 
     const letterBoxesArray = Array.from(letterBoxes);
 
