@@ -7,7 +7,8 @@ import Keyboard from "./Keyboard";
 import "@/styles/App.css";
 
 export default function App() {
-    const initialBoard = (filler) => Array.from({ length: 6 }, () => Array(5).fill(filler));
+    const initialBoard = (filler) =>
+        Array.from({ length: 6 }, () => Array(5).fill(filler));
 
     const [tiles, setTiles] = useState(initialBoard(""));
     const [guess, setGuess] = useState([]);
@@ -17,6 +18,7 @@ export default function App() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState(initialBoard("empty"));
+    const [gameWon, setGameWon] = useState(false)
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
@@ -25,9 +27,9 @@ export default function App() {
 
         if (guessWord === word.toUpperCase()) {
             setMessage("Congratulations, you won!! ");
+            setGameWon(true)
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
-        } 
-        else {
+        } else {
             const remainingLetters = word.toUpperCase().split("");
             for (let i = 0; i < 5; i++) {
                 if (guess[i] === word[i].toUpperCase()) {
@@ -35,20 +37,22 @@ export default function App() {
                     remainingLetters[i] = null;
                 }
             }
-            // check if exists
             for (let i = 0; i < 5; i++) {
                 if (newStatus[currentRow][i] === "empty") {
                     let indexAnswer = remainingLetters.indexOf(guess[i]);
-                    if (indexAnswer !== -1 && newStatus[currentRow][i] !== "correct") {
+                    if (
+                        indexAnswer !== -1 &&
+                        newStatus[currentRow][i] !== "correct"
+                    ) {
                         newStatus[currentRow][i] = "present";
                         remainingLetters[indexAnswer] = null;
                     } else {
-                      newStatus[currentRow][i] = "absent";
+                        newStatus[currentRow][i] = "absent";
                     }
                 }
             }
         }
-        setStatus(newStatus)
+        setStatus(newStatus);
     }
 
     const validateWord = async () => {
@@ -83,9 +87,9 @@ export default function App() {
 
     const handleKeyPress = async (key) => {
         if (currentRow > 5) return;
+        if (gameWon) return;
 
         if (key === "ENTER") {
-            //TODO: Add word validation
             if (currentCol === 5) {
                 setLoading(true);
                 await validateWord();
@@ -155,7 +159,10 @@ export default function App() {
                 loading={loading}
                 displayMessage={message}
             />
-            <GameBoard tiles={tiles} status={status}/>
+            <GameBoard
+                tiles={tiles}
+                status={status}
+            />
             <Keyboard onKeyPress={handleKeyPress} />
         </>
     );
