@@ -66,7 +66,6 @@ export default function App() {
             const response = await fetchResponse.json();
 
             if (response.validWord) {
-                setMessage("Valid word!");
                 letterEval(guessWord);
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
@@ -141,7 +140,6 @@ export default function App() {
                 }
                 const result = await response.json();
                 setWord(result.word);
-                setMessage("Word fetched");
             } catch (error) {
                 console.error(error.message);
                 setMessage("Could not load word. Try again.");
