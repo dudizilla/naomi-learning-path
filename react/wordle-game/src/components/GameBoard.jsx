@@ -3,8 +3,6 @@ import "@/styles/GameBoard.css";
 import LetterTile from "./LetterTile";
 
 export default function GameBoard({ tiles, status }) {
-    console.log(tiles)
-    console.log(status)
     return (
         <section className="letter-board">
             {tiles.map((row, rowIndex) =>
