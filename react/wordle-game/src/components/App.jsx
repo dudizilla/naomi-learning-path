@@ -18,7 +18,7 @@ export default function App() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState(initialBoard("empty"));
-    const [gameWon, setGameWon] = useState(false)
+    const [gameWon, setGameWon] = useState(false);
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
@@ -26,8 +26,8 @@ export default function App() {
         const newStatus = structuredClone(status);
 
         if (guessWord === word.toUpperCase()) {
-            setMessage("Congratulations, you won!! ");
-            setGameWon(true)
+            setMessage("🎉 You won!");
+            setGameWon(true);
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
         } else {
             const remainingLetters = word.toUpperCase().split("");
@@ -51,6 +51,9 @@ export default function App() {
                     }
                 }
             }
+            if (currentRow === 5) {
+            setMessage("😞 The word was: " + word);
+        }
         }
         setStatus(newStatus);
     }
@@ -70,6 +73,7 @@ export default function App() {
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
             } else {
+                console.log(guessWord, response);
                 setMessage("Not a valid word. Try again.");
                 const newTiles = structuredClone(tiles);
                 for (let i = 0; i < 5; i++) newTiles[currentRow][i] = "";
@@ -150,12 +154,15 @@ export default function App() {
         fetchWord();
     }, []);
 
+    const isSpecialCaseMessage = ["😞 The word was: " + word, "🎉 You won!"].includes(message)
+
     return (
         <>
             <Header />
             <InfoBlock
                 loading={loading}
                 displayMessage={message}
+                keepVisible = {isSpecialCaseMessage}
             />
             <GameBoard
                 tiles={tiles}
