@@ -1,0 +1,15 @@
+:root {
+    --yellow: #ceb02c;
+    --gray: #939b9f;
+    --green: #66a060;
+    --white: #ffffff;
+    --bg-button: #d3d6da;
+    --text: #56575e;
+    --bg-empty: #939b9f4d;
+    --bg-header: #f3f3f3;
+    --txt-header: #202537;
+}
+
+body {
+    font-family: var(--font-roboto), sans-serif;
+}
