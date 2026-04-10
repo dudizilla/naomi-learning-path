@@ -4,8 +4,8 @@
     justify-content: center;
     margin: 30px auto 0;
     background-color: var(--bg-header);
-    width: 638;
-    height: 84;
+    width: 638px;
+    height: 84px;
     border-radius: 15px;
     opacity: 1;
 }
@@ -16,7 +16,7 @@
     font-weight: 600;
     font-size: 40px;
     line-height: 100%;
-    letter-spacing: 7.5%;
     text-align: center;
     color: var(--txt-header);
+    letter-spacing: 0.075em;
 }

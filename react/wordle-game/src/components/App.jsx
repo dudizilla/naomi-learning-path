@@ -4,7 +4,6 @@ import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
-import "@/styles/App.css";
 
 export default function App() {
     const initialBoard = Array.from({ length: 6 }, () => Array(5).fill(""));

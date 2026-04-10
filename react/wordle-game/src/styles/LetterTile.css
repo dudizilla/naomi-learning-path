@@ -6,14 +6,9 @@
     text-transform: uppercase;
     font-size: 50px;
     font-weight: bold;
-    caret-color: transparent;
     text-align: center;
     color: var(--text);
     border-radius: 5px;
-}
-
-.letter-board__item:focus {
-    outline: none;
 }
 
 .correct {
