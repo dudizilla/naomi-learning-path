@@ -25,3 +25,18 @@
     width: fit-content;
     padding: 0 25px;
 }
+
+.correct {
+    background-color: var(--green);
+    color: var(--white);
+}
+
+.present {
+    background-color: var(--yellow);
+    color: var(--white);
+}
+
+.absent {
+    background-color: var(--gray);
+    color: var(--white);
+}

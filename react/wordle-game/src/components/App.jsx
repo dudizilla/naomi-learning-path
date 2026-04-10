@@ -19,11 +19,13 @@ export default function App() {
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState(initialBoard("empty"));
     const [gameWon, setGameWon] = useState(false);
+    const [keyStatus, setKeyStatus] = useState({});
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
     function letterEval(guessWord) {
         const newStatus = structuredClone(status);
+        const newKeyStatus = { ...keyStatus };
 
         if (guessWord === word.toUpperCase()) {
             setMessage("🎉 You won!");
@@ -52,9 +54,29 @@ export default function App() {
                 }
             }
             if (currentRow === 5) {
-            setMessage("😞 The word was: " + word);
+                setMessage("😞 The word was: " + word);
+            }
         }
+        for (let i = 0; i < 5; i++) {
+            const letter = guessWord[i];
+            const letterStatus = newStatus[currentRow][i];
+            const currentKeyStatus = keyStatus[letter];
+
+            if (letterStatus === "correct") {
+                newKeyStatus[letter] = "correct";
+            } else if (
+                letterStatus === "present" &&
+                currentKeyStatus !== "correct"
+            ) {
+                newKeyStatus[letter] = "present";
+            } else if (
+                letterStatus === "absent" &&
+                !["correct", "present"].includes(currentKeyStatus)
+            ) {
+                newKeyStatus[letter] = "absent";
+            }
         }
+        setKeyStatus(newKeyStatus);
         setStatus(newStatus);
     }
 
@@ -113,6 +135,9 @@ export default function App() {
                 if (!isLetter) {
                     return;
                 }
+                if (keyStatus[key] === "absent") {
+                    return;
+                }
                 const newTiles = structuredClone(tiles);
                 newTiles[currentRow][currentCol] = key;
                 setGuess([...guess, key]);
@@ -154,7 +179,10 @@ export default function App() {
         fetchWord();
     }, []);
 
-    const isSpecialCaseMessage = ["😞 The word was: " + word, "🎉 You won!"].includes(message)
+    const isSpecialCaseMessage = [
+        "😞 The word was: " + word,
+        "🎉 You won!",
+    ].includes(message);
 
     return (
         <>
@@ -162,13 +190,16 @@ export default function App() {
             <InfoBlock
                 loading={loading}
                 displayMessage={message}
-                keepVisible = {isSpecialCaseMessage}
+                keepVisible={isSpecialCaseMessage}
             />
             <GameBoard
                 tiles={tiles}
                 status={status}
             />
-            <Keyboard onKeyPress={handleKeyPress} />
+            <Keyboard
+                onKeyPress={handleKeyPress}
+                keyStatus={keyStatus}
+            />
         </>
     );
 }
