@@ -16,10 +16,8 @@ export default function InfoBlock({ loading, displayMessage }) {
 
     return (
         <div className="info-block">
-            {loading && <span className="loader"> </span>}
-            {!loading && displayMessage && showMessage ? (
-                <h2 className="info-block__title"> {displayMessage} </h2>
-            ) : null}
+            {loading && <span className="loader" />}
+            {!loading && displayMessage ? <h2 className="info-block__title"> {displayMessage} </h2> : null}
         </div>
     );
 }
