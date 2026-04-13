@@ -168,7 +168,7 @@ export default function App() {
     }, [tiles, guess]);
 
     useEffect(() => {
-        const WORD_URL = "https://words.dev-apis.com/word-of-the-day";
+        const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
         const fetchWord = async () => {
             try {
                 const response = await fetch(WORD_URL);
