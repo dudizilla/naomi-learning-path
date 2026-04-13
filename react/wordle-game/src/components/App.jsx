@@ -17,6 +17,7 @@ export default function App() {
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
+    const [messageTrigger, setMessageTrigger] = useState(0);
     const [status, setStatus] = useState(initialBoard("empty"));
     const [gameWon, setGameWon] = useState(false);
     const [keyStatus, setKeyStatus] = useState({});
@@ -29,6 +30,7 @@ export default function App() {
 
         if (guessWord === word.toUpperCase()) {
             setMessage("🎉 You won!");
+            setMessageTrigger(t => t + 1)
             setGameWon(true);
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
         } else {
@@ -55,6 +57,7 @@ export default function App() {
             }
             if (currentRow === 5) {
                 setMessage("😞 The word was: " + word);
+                setMessageTrigger(t => t + 1)
             }
         }
         for (let i = 0; i < 5; i++) {
@@ -95,8 +98,8 @@ export default function App() {
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
             } else {
-                console.log(guessWord, response);
                 setMessage("Not a valid word. Try again.");
+                setMessageTrigger(t => t + 1)
                 const newTiles = structuredClone(tiles);
                 for (let i = 0; i < 5; i++) newTiles[currentRow][i] = "";
                 setTiles(newTiles);
@@ -105,6 +108,7 @@ export default function App() {
             setGuess([]);
         } catch (error) {
             setMessage("Could not validate word. Try again.");
+            setMessageTrigger(t => t + 1)
         }
 
         setLoading(false);
@@ -118,7 +122,11 @@ export default function App() {
             if (currentCol === 5) {
                 setLoading(true);
                 await validateWord();
-            } else setMessage("Not enough letters");
+            } else {setMessage("Not enough letters");
+                setMessageTrigger(t => t + 1)
+            }
+        
+            return
         } else if (key === "BACKSPACE") {
             if (currentCol > 0) {
                 const newTiles = structuredClone(tiles);
@@ -172,6 +180,7 @@ export default function App() {
             } catch (error) {
                 console.error(error.message);
                 setMessage("Could not load word. Try again.");
+                setMessageTrigger(t => t + 1)
             } finally {
                 setLoading(false);
             }
@@ -191,6 +200,7 @@ export default function App() {
                 loading={loading}
                 displayMessage={message}
                 keepVisible={isSpecialCaseMessage}
+                messageTrigger={messageTrigger}
             />
             <GameBoard
                 tiles={tiles}

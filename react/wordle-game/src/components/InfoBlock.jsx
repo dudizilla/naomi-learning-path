@@ -1,7 +1,7 @@
 import "@/styles/InfoBlock.css";
 import { useState, useEffect } from "react";
 
-export default function InfoBlock({ loading, displayMessage, keepVisible = false }) {
+export default function InfoBlock({ loading, displayMessage, keepVisible = false, messageTrigger}) {
     const [showMessage, setShowMessage] = useState(false);
 
     useEffect(() => {
@@ -14,7 +14,7 @@ export default function InfoBlock({ loading, displayMessage, keepVisible = false
 
             return () => clearTimeout(timer);
         }
-    }, [displayMessage]);
+    }, [displayMessage, keepVisible, messageTrigger]);
 
     return (
         <div className="info-block">
