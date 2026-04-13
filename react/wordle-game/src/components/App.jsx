@@ -30,7 +30,7 @@ export default function App() {
 
         if (guessWord === word.toUpperCase()) {
             setMessage("🎉 You won!");
-            setMessageTrigger(t => t + 1)
+            setMessageTrigger((t) => t + 1);
             setGameWon(true);
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
         } else {
@@ -57,13 +57,13 @@ export default function App() {
             }
             if (currentRow === 5) {
                 setMessage("😞 The word was: " + word);
-                setMessageTrigger(t => t + 1)
+                setMessageTrigger((t) => t + 1);
             }
         }
         for (let i = 0; i < 5; i++) {
             const letter = guessWord[i];
             const letterStatus = newStatus[currentRow][i];
-            const currentKeyStatus = keyStatus[letter];
+            const currentKeyStatus = newKeyStatus[letter];
 
             if (letterStatus === "correct") {
                 newKeyStatus[letter] = "correct";
@@ -99,7 +99,7 @@ export default function App() {
                 setCurrentCol(0);
             } else {
                 setMessage("Not a valid word. Try again.");
-                setMessageTrigger(t => t + 1)
+                setMessageTrigger((t) => t + 1);
                 const newTiles = structuredClone(tiles);
                 for (let i = 0; i < 5; i++) newTiles[currentRow][i] = "";
                 setTiles(newTiles);
@@ -108,7 +108,7 @@ export default function App() {
             setGuess([]);
         } catch (error) {
             setMessage("Could not validate word. Try again.");
-            setMessageTrigger(t => t + 1)
+            setMessageTrigger((t) => t + 1);
         }
 
         setLoading(false);
@@ -122,11 +122,12 @@ export default function App() {
             if (currentCol === 5) {
                 setLoading(true);
                 await validateWord();
-            } else {setMessage("Not enough letters");
-                setMessageTrigger(t => t + 1)
+            } else {
+                setMessage("Not enough letters");
+                setMessageTrigger((t) => t + 1);
             }
-        
-            return
+
+            return;
         } else if (key === "BACKSPACE") {
             if (currentCol > 0) {
                 const newTiles = structuredClone(tiles);
@@ -168,7 +169,7 @@ export default function App() {
     }, [tiles, guess]);
 
     useEffect(() => {
-        const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
+        const WORD_URL = "https://words.dev-apis.com/word-of-the-day";
         const fetchWord = async () => {
             try {
                 const response = await fetch(WORD_URL);
@@ -180,7 +181,7 @@ export default function App() {
             } catch (error) {
                 console.error(error.message);
                 setMessage("Could not load word. Try again.");
-                setMessageTrigger(t => t + 1)
+                setMessageTrigger((t) => t + 1);
             } finally {
                 setLoading(false);
             }
