@@ -4,6 +4,7 @@ import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
+import Button from "./Button";
 
 export default function App() {
     const initialBoard = (filler) =>
@@ -206,6 +207,7 @@ export default function App() {
                 tiles={tiles}
                 status={status}
             />
+            {isSpecialCaseMessage && <Button/>}
             <Keyboard
                 onKeyPress={handleKeyPress}
                 keyStatus={keyStatus}
