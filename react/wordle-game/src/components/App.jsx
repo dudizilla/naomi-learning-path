@@ -168,26 +168,43 @@ export default function App() {
         };
     }, [tiles, guess]);
 
-    useEffect(() => {
-        const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
-        const fetchWord = async () => {
-            try {
-                const response = await fetch(WORD_URL);
-                if (!response.ok) {
-                    throw new Error(response.status);
-                }
-                const result = await response.json();
-                setWord(result.word);
-            } catch (error) {
-                console.error(error.message);
-                setMessage("Could not load word. Try again.");
-                setMessageTrigger((t) => t + 1);
-            } finally {
-                setLoading(false);
+    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
+    const fetchWord = async () => {
+        try {
+            const response = await fetch(WORD_URL);
+            if (!response.ok) {
+                throw new Error(response.status);
             }
-        };
+            const result = await response.json();
+            setWord(result.word);
+        } catch (error) {
+            console.error(error.message);
+            setMessage("Could not load word. Try again.");
+            setMessageTrigger((t) => t + 1);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
         fetchWord();
     }, []);
+
+    const handleRestart = () => {
+        setTiles(initialBoard(""));
+        setGuess([]);
+        setCurrentRow(0);
+        setCurrentCol(0);
+        setWord("");
+        setLoading(true);
+        setMessage("");
+        setMessageTrigger((t) => t + 1);
+        setStatus(initialBoard("empty"));
+        setGameWon(false);
+        setKeyStatus({});
+
+        fetchWord();
+    };
 
     const isSpecialCaseMessage = [
         "😞 The word was: " + word,
@@ -207,7 +224,7 @@ export default function App() {
                 tiles={tiles}
                 status={status}
             />
-            {isSpecialCaseMessage && <Button/>}
+            {isSpecialCaseMessage && <Button onGameRestart={handleRestart} />}
             <Keyboard
                 onKeyPress={handleKeyPress}
                 keyStatus={keyStatus}

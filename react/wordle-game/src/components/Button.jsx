@@ -1,9 +1,12 @@
 import "@/styles/Button.css";
-import { useState, useEffect } from "react";
 
-export default function InfoBlock({ }) {
-
+export default function RestartButton({ onGameRestart }) {
     return (
-        <button className="restart-button"> Play Again </button>
+        <button
+            className="restart-button"
+            onClick={onGameRestart}
+        >
+            Play Again
+        </button>
     );
 }
