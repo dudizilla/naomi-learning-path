@@ -17,6 +17,7 @@
     font-size: 40px;
     line-height: 100%;
     text-align: center;
+    text-transform: uppercase;
     color: var(--txt-header);
     letter-spacing: 0.075em;
 }
