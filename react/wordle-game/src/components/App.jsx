@@ -73,7 +73,6 @@ export default function App() {
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
             } else {
-                console.log(guessWord, response);
                 setMessage("Not a valid word. Try again.");
                 const newTiles = structuredClone(tiles);
                 for (let i = 0; i < 5; i++) newTiles[currentRow][i] = "";
