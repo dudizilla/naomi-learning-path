@@ -11,6 +11,7 @@ export default function GameBoard({ tiles, status }) {
                         key={`${rowIndex}-${colIndex}`}
                         letter={currentLetter}
                         status={status[rowIndex][colIndex]}
+                        position={colIndex}
                     />
                 )),
             )}
