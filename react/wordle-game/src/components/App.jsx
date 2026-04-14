@@ -5,6 +5,7 @@ import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
 import Button from "./Button";
+import "@/styles/App.css"
 
 export default function App() {
     const initialBoard = (filler) =>
@@ -219,7 +220,7 @@ export default function App() {
     ].includes(message);
 
     return (
-        <>
+        <div className="app-container">
             <Header />
             <InfoBlock
                 loading={loading}
@@ -236,6 +237,6 @@ export default function App() {
                 onKeyPress={handleKeyPress}
                 keyStatus={keyStatus}
             />
-        </>
+        </div>
     );
 }

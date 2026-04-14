@@ -2,9 +2,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px auto 0;
+    margin: 20px auto 0;
     background-color: var(--bg-header);
-    width: 638px;
+    width: 100%;
+    max-width: 638px;
     height: 84px;
     border-radius: 15px;
     opacity: 1;
