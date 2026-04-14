@@ -121,7 +121,6 @@ export default function App() {
     };
 
     const handleKeyPress = async (key) => {
-        console.log(isAnimating)
         if (isAnimating) return;
         if (currentRow > 5) return;
         if (gameWon) return;
