@@ -21,6 +21,7 @@ export default function App() {
     const [status, setStatus] = useState(initialBoard("empty"));
     const [gameWon, setGameWon] = useState(false);
     const [keyStatus, setKeyStatus] = useState({});
+    const [isAnimating, setIsAnimating] = useState(false);
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
@@ -94,9 +95,14 @@ export default function App() {
             const response = await fetchResponse.json();
 
             if (response.validWord) {
+                setIsAnimating(true);
                 letterEval(guessWord);
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
+
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 1800);
             } else {
                 setMessage("Not a valid word. Try again.");
                 setMessageTrigger((t) => t + 1);
@@ -115,6 +121,8 @@ export default function App() {
     };
 
     const handleKeyPress = async (key) => {
+        console.log(isAnimating)
+        if (isAnimating) return;
         if (currentRow > 5) return;
         if (gameWon) return;
 
@@ -166,7 +174,7 @@ export default function App() {
         return () => {
             window.removeEventListener("keydown", handlePhysicalKey);
         };
-    }, [tiles, guess]);
+    }, [tiles, guess, isAnimating]);
 
     const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
     const fetchWord = async () => {
