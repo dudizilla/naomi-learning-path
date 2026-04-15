@@ -1,22 +1,21 @@
-.keyboard{
-    margin: 30px auto 10px auto;
+.keyboard {
+    margin: 30px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px 28px;
+    padding: 15px 20px;
     border-radius: 15px;
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
     gap: 3px;
     box-sizing: border-box;
 }
 
-.keyboard__button{
+.keyboard__button {
     box-sizing: border-box;
     height: 50px;
-    width: 45px;
-    margin: 2px;
+    width: 60px;
     background-color: var(--bg-button);
     border-radius: 8px;
     font-size: 1.12rem;
@@ -24,17 +23,23 @@
     color: var(--text);
     flex: 1;
     font-weight: bold;
+    text-align: center;
+    padding-left: 5;
 }
 
 .row {
     display: flex;
     width: 100%;
-    gap: 2px;
+    gap: 4px;
 }
 
-.special-key{
+.special-key {
     flex: 1.5;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+}
+
+.backspace {
+    font-size: 1.2rem;
 }
 
 .correct {
@@ -55,15 +60,21 @@
 @media (max-width: 380px) {
     .keyboard {
         gap: 4px;
-        padding: 5px;
+        padding: 4px 5px;
+        margin-left: 5px;
     }
     .row {
-        gap: 2px;
+        gap: 1.5px;
     }
     .keyboard__button {
-        height: 48px;
+        height: 43px;
+        min-width: 10px;
+        font-size: 1rem;
     }
     .special-key {
-        font-size: 0.7rem;
+        font-size: 0.5rem;
+    }
+    .backspace {
+        font-size: 1rem;
     }
 }

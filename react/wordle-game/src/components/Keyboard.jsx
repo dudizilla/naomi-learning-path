@@ -1,7 +1,7 @@
 "use client";
 import "@/styles/Keyboard.css";
 
-export default function Keyboard({ onKeyPress, keyStatus = {}}) {
+export default function Keyboard({ onKeyPress, keyStatus = {} }) {
     const keyboardLayout = [
         ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
         ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -17,13 +17,13 @@ export default function Keyboard({ onKeyPress, keyStatus = {}}) {
                 >
                     {row.map((letter) => {
                         const isSpecialKey =
-                            letter === "BACKSPACE" || letter === "ENTER";
+                            letter === "⌫" || letter === "ENTER";
                         const status = keyStatus[letter] || "";
                         return (
                             <button
                                 className={`keyboard__button ${
                                     isSpecialKey ? "special-key" : ""
-                                } ${status}`}
+                                } ${letter === "⌫" ? "backspace" : ""} ${status}`}
                                 key={letter}
                                 onClick={() => onKeyPress(letter)}
                             >

@@ -11,6 +11,7 @@
     font-family: sans-serif;
     margin: 0;
 }
+
 .loader {
     width: 32px;
     height: 32px;
@@ -20,17 +21,30 @@
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1.2s linear infinite;
-    }
+}
 
-    @keyframes rotation {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
     100% {
         transform: rotate(360deg);
     }
-    } 
-      
-.info-block__wrapper{
+}
+
+.info-block__wrapper {
     height: 30px;
+}
+
+@media (max-width: 380px) {
+    .info-block {
+        height: 35px;
+    }
+    .info-block__title {
+        font-size: 20px;
+    }
+    .loader {
+        height: 28px;
+        width: 28px;
+    }
 }

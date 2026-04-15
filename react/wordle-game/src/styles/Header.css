@@ -9,13 +9,14 @@
     height: 84px;
     border-radius: 15px;
     opacity: 1;
+    padding: 5px 10px;
 }
 
 .page-header__title {
     margin: 15px;
     font-family: Roboto;
     font-weight: 600;
-    font-size: 40px;
+    font-size: 35px;
     line-height: 100%;
     text-align: center;
     text-transform: uppercase;

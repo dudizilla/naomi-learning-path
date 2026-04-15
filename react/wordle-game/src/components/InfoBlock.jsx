@@ -1,7 +1,12 @@
 import "@/styles/InfoBlock.css";
 import { useState, useEffect } from "react";
 
-export default function InfoBlock({ loading, displayMessage, keepVisible = false, messageTrigger}) {
+export default function InfoBlock({
+    loading,
+    displayMessage,
+    keepVisible = false,
+    messageTrigger,
+}) {
     const [showMessage, setShowMessage] = useState(false);
 
     useEffect(() => {

@@ -5,7 +5,7 @@ import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
 import Button from "./Button";
-import "@/styles/App.css"
+import "@/styles/App.css";
 
 export default function App() {
     const initialBoard = (filler) =>
@@ -136,7 +136,7 @@ export default function App() {
             }
 
             return;
-        } else if (key === "BACKSPACE") {
+        } else if (key === "BACKSPACE" || key === "⌫") {
             if (currentCol > 0) {
                 const newTiles = structuredClone(tiles);
                 newTiles[currentRow][currentCol - 1] = "";
@@ -219,6 +219,7 @@ export default function App() {
         "🎉 You won!",
     ].includes(message);
 
+    console.log(word)
     return (
         <div className="app-container">
             <Header />
