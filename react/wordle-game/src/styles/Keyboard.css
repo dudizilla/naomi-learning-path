@@ -10,6 +10,7 @@
     max-width: 500px;
     gap: 3px;
     box-sizing: border-box;
+    background-color: var(--bg-header);
 }
 
 .keyboard__button {

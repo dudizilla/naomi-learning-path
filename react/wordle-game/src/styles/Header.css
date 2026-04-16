@@ -34,4 +34,7 @@ font-size: 35px !important;
   'opsz' 35;
   position: absolute;
   right: 28px;
+  border: none;
+  background-color: transparent;
+  color: var(--text);
 }

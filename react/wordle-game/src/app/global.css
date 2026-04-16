@@ -8,10 +8,31 @@
     --bg-empty: #939b9f4d;
     --bg-header: #f3f3f3;
     --txt-header: #202537;
+    --block-bg-light: #daddde;
+    --block-bg-dark: #3c4150;
+    --bg-light: #262b3c;
+    --bg-dark: #f9f9f9;
+    --icon-light: #818181;
+    --icon-dark: #dadce0;
+    --invalid-letter: #d3d6da;
+    --dark-font: #56575e;
 }
 
 body {
     font-family: var(--font-roboto), sans-serif;
+    position: relative;
+}
+
+body.dark {
+    background-color: var(--bg-light);
+    --white: var(--bg-light); 
+    --text: var(--icon-dark); 
+    --txt-header: var(--icon-dark);
+    --dark-font: var(--icon-dark);
+    --bg-header: var(--block-bg-dark);
+    --bg-empty: var(--block-bg-dark);
+    --invalid-letter: var(--block-bg-dark);
+    --bg-button: var(--icon-light); 
 }
 
 html,

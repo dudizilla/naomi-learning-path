@@ -1,0 +1,93 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(32, 37, 55, 0.6); 
+    backdrop-filter: blur(8px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 70;
+}
+
+.switch-block {
+    background-color: var(--white);
+    color: var(--text);
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.switch-block__title {
+    margin-top: 0;
+    font-size: 24px;
+    color: var(--txt-header);
+}
+
+.theme-switch {
+    position: relative;
+    appearance: none;
+    width: 60px;
+    height: 30px;
+    background-color: var(--bg-button);
+    border-radius: 30px;
+    outline: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.theme-switch::after {
+    content: "";
+    position: absolute;
+    background-color: var(--white);
+    top: 4px;
+    left: 4px; 
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    transition: left 0.3s, background-color 0.3s;
+}
+
+.theme-switch:checked::after {
+    left: 34px;
+}
+
+.button-block {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    background-color: var(--yellow);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.save-btn {
+    background-color: var(--green);
+    color: var(--white);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+body.dark-mode .switch-block {
+    background-color: var(--block-bg-dark);
+    color: var(--white);
+}
+
+body.dark-mode .switch-block__title {
+    color: var(--white);
+}
+
+body.dark-mode .theme-switch {
+    background-color: var(--bg-light);
+}

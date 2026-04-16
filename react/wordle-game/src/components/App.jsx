@@ -5,6 +5,7 @@ import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
 import Button from "./Button";
+import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 
 export default function App() {
@@ -23,8 +24,11 @@ export default function App() {
     const [gameWon, setGameWon] = useState(false);
     const [keyStatus, setKeyStatus] = useState({});
     const [isAnimating, setIsAnimating] = useState(false);
+    const [showThemeSwitch, setShowThemeSwitch] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
+    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
 
     function letterEval(guessWord) {
         const newStatus = structuredClone(status);
@@ -122,6 +126,7 @@ export default function App() {
     };
 
     const handleKeyPress = async (key) => {
+        if (showThemeSwitch) return;
         if (isAnimating) return;
         if (currentRow > 5) return;
         if (gameWon) return;
@@ -176,7 +181,6 @@ export default function App() {
         };
     }, [tiles, guess, isAnimating]);
 
-    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
     const fetchWord = async () => {
         try {
             const response = await fetch(WORD_URL);
@@ -214,15 +218,39 @@ export default function App() {
         fetchWord();
     };
 
+    const handleSettings = () => {
+        setShowThemeSwitch(true);
+    };
+
+    const closeSettings = () => {
+        setShowThemeSwitch(false);
+    };
+
+    const toggleMode = () => {
+        setIsDarkMode(!isDarkMode);
+    };
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+    }, [isDarkMode]);
+
     const isSpecialCaseMessage = [
         "😞 The word was: " + word,
         "🎉 You won!",
     ].includes(message);
 
-    console.log(word)
+    console.log(word);
+    console.log(isDarkMode)
     return (
         <div className="app-container">
-            <Header />
+            <Header
+                showThemeSwitch={showThemeSwitch}
+                onClick={handleSettings}
+            />
             <InfoBlock
                 loading={loading}
                 displayMessage={message}
@@ -238,6 +266,13 @@ export default function App() {
                 onKeyPress={handleKeyPress}
                 keyStatus={keyStatus}
             />
+            {showThemeSwitch && (
+                <ThemeSwitch
+                    isDarkMode={isDarkMode}
+                    toggleTheme={toggleMode}
+                    onClose={closeSettings}
+                />
+            )}
         </div>
     );
 }
