@@ -4,6 +4,10 @@ import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
+import Button from "./Button";
+
+const MSG_WIN = "🎉 You won!";
+const MSG_LOSS_PREFIX = "😞 The word was: ";
 
 export default function App() {
     const initialBoard = (filler) =>
@@ -16,17 +20,23 @@ export default function App() {
     const [word, setWord] = useState("");
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState("");
+    const [messageTrigger, setMessageTrigger] = useState(0);
     const [status, setStatus] = useState(initialBoard("empty"));
-    const [gameWon, setGameWon] = useState(false)
-
+    const [gameWon, setGameWon] = useState(false);
+    const [keyStatus, setKeyStatus] = useState({});
+    const [isAnimating, setIsAnimating] = useState(false);
+    
+    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
     function letterEval(guessWord) {
         const newStatus = structuredClone(status);
+        const newKeyStatus = { ...keyStatus };
 
         if (guessWord === word.toUpperCase()) {
-            setMessage("Congratulations, you won!! ");
-            setGameWon(true)
+            setMessage(MSG_WIN);
+            setMessageTrigger((t) => t + 1);
+            setGameWon(true);
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
         } else {
             const remainingLetters = word.toUpperCase().split("");
@@ -50,7 +60,31 @@ export default function App() {
                     }
                 }
             }
+            if (currentRow === 5) {
+                setMessage(MSG_LOSS_PREFIX + word);
+                setMessageTrigger((t) => t + 1);
+            }
         }
+        for (let i = 0; i < 5; i++) {
+            const letter = guessWord[i];
+            const letterStatus = newStatus[currentRow][i];
+            const currentKeyStatus = newKeyStatus[letter];
+
+            if (letterStatus === "correct") {
+                newKeyStatus[letter] = "correct";
+            } else if (
+                letterStatus === "present" &&
+                currentKeyStatus !== "correct"
+            ) {
+                newKeyStatus[letter] = "present";
+            } else if (
+                letterStatus === "absent" &&
+                !["correct", "present"].includes(currentKeyStatus)
+            ) {
+                newKeyStatus[letter] = "absent";
+            }
+        }
+        setKeyStatus(newKeyStatus);
         setStatus(newStatus);
     }
 
@@ -65,11 +99,17 @@ export default function App() {
             const response = await fetchResponse.json();
 
             if (response.validWord) {
+                setIsAnimating(true);
                 letterEval(guessWord);
                 setCurrentRow(currentRow + 1);
                 setCurrentCol(0);
+
+                setTimeout(() => {
+                    setIsAnimating(false);
+                }, 1800);
             } else {
                 setMessage("Not a valid word. Try again.");
+                setMessageTrigger((t) => t + 1);
                 const newTiles = structuredClone(tiles);
                 for (let i = 0; i < 5; i++) newTiles[currentRow][i] = "";
                 setTiles(newTiles);
@@ -78,12 +118,14 @@ export default function App() {
             setGuess([]);
         } catch (error) {
             setMessage("Could not validate word. Try again.");
+            setMessageTrigger((t) => t + 1);
         }
 
         setLoading(false);
     };
 
     const handleKeyPress = async (key) => {
+        if (isAnimating) return;
         if (currentRow > 5) return;
         if (gameWon) return;
 
@@ -91,7 +133,12 @@ export default function App() {
             if (currentCol === 5) {
                 setLoading(true);
                 await validateWord();
-            } else setMessage("Not enough letters");
+            } else {
+                setMessage("Not enough letters");
+                setMessageTrigger((t) => t + 1);
+            }
+
+            return;
         } else if (key === "BACKSPACE") {
             if (currentCol > 0) {
                 const newTiles = structuredClone(tiles);
@@ -106,6 +153,9 @@ export default function App() {
             if (currentCol < 5) {
                 const isLetter = /^[a-zA-Z]$/.test(key);
                 if (!isLetter) {
+                    return;
+                }
+                if (keyStatus[key] === "absent") {
                     return;
                 }
                 const newTiles = structuredClone(tiles);
@@ -127,27 +177,47 @@ export default function App() {
         return () => {
             window.removeEventListener("keydown", handlePhysicalKey);
         };
-    }, [tiles, guess]);
+    }, [tiles, guess, isAnimating]);
+
+    const fetchWord = async () => {
+        try {
+            const response = await fetch(WORD_URL);
+            if (!response.ok) {
+                throw new Error(response.status);
+            }
+            const result = await response.json();
+            setWord(result.word);
+        } catch (error) {
+            console.error(error.message);
+            setMessage("Could not load word. Try again.");
+            setMessageTrigger((t) => t + 1);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
-        const fetchWord = async () => {
-            try {
-                const response = await fetch(WORD_URL);
-                if (!response.ok) {
-                    throw new Error(response.status);
-                }
-                const result = await response.json();
-                setWord(result.word);
-            } catch (error) {
-                console.error(error.message);
-                setMessage("Could not load word. Try again.");
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchWord();
     }, []);
+
+    const handleRestart = () => {
+        setTiles(initialBoard(""));
+        setGuess([]);
+        setCurrentRow(0);
+        setCurrentCol(0);
+        setWord("");
+        setLoading(true);
+        setMessage("");
+        setMessageTrigger((t) => t + 1);
+        setStatus(initialBoard("empty"));
+        setGameWon(false);
+        setKeyStatus({});
+
+        fetchWord();
+    };
+
+    const isSpecialCaseMessage =
+        message === MSG_WIN || message.startsWith(MSG_LOSS_PREFIX);
 
     return (
         <>
@@ -155,12 +225,18 @@ export default function App() {
             <InfoBlock
                 loading={loading}
                 displayMessage={message}
+                keepVisible={isSpecialCaseMessage}
+                messageTrigger={messageTrigger}
             />
             <GameBoard
                 tiles={tiles}
                 status={status}
             />
-            <Keyboard onKeyPress={handleKeyPress} />
+            {isSpecialCaseMessage && <Button onGameRestart={handleRestart} />}
+            <Keyboard
+                onKeyPress={handleKeyPress}
+                keyStatus={keyStatus}
+            />
         </>
     );
 }
