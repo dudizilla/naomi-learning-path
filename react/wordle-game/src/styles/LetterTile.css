@@ -6,32 +6,54 @@
     text-transform: uppercase;
     font-size: 35px;
     font-weight: bold;
-    caret-color: transparent;
     text-align: center;
     padding: 10px 0;
     color: var(--text);
     border-radius: 5px;
-}
-
-.letter-board__item:focus {
-    outline: none;
+    background-color: var(--bg-empty);
 }
 
 .correct {
-    background-color: var(--green);
-    color: var(--white);
+    --new-bg: var(--green);
+    --new-color: var(--white);
+    animation: flip 0.5s ease forwards;
 }
 
 .present {
-    background-color: var(--yellow);
-    color: var(--white);
+    --new-bg: var(--yellow);
+    --new-color: var(--white);
+    animation: flip 0.5s ease forwards;
 }
 
 .absent {
-    background-color: var(--gray);
-    color: var(--white);
+    --new-bg: var(--gray);
+    --new-color: var(--white);
+    animation: flip 0.5s ease forwards;
 }
 
 .empty {
     background-color: var(--bg-empty);
+}
+
+@keyframes flip {
+    0% {
+        transform: rotateX(0);
+        background-color: var(--bg-empty);
+        color: var(--text);
+    }
+    49% {
+        transform: rotateX(90deg);
+        background-color: var(--bg-empty);
+        color: var(--text);
+    }
+    50% {
+        transform: rotateX(90deg);
+        background-color: var(--new-bg);
+        color: var(--new-color);
+    }
+    100% {
+        transform: rotateX(0);
+          background-color: var(--new-bg);
+        color: var(--new-color);
+    }
 }
