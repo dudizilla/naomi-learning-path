@@ -276,8 +276,6 @@ export default function App() {
         "🎉 You won!",
     ].includes(message);
 
-    console.log(word);
-    console.log(isDarkMode);
     return (
         <div className="app-container">
             <Header
