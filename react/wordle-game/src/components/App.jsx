@@ -259,8 +259,8 @@ export default function App() {
         setShowThemeSwitch(false);
     };
 
-    const toggleMode = () => {
-        setIsDarkMode(!isDarkMode);
+    const saveTheme = (newValue) => {
+        setIsDarkMode(newValue);
     };
 
     useEffect(() => {
@@ -300,7 +300,7 @@ export default function App() {
             {showThemeSwitch && (
                 <ThemeSwitch
                     isDarkMode={isDarkMode}
-                    toggleTheme={toggleMode}
+                    onSave = {saveTheme}
                     onClose={closeSettings}
                 />
             )}
