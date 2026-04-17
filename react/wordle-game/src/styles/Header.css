@@ -11,6 +11,7 @@
     border-radius: 15px;
     opacity: 1;
     padding: 5px 10px;
+    box-sizing: border-box ;
 }
 
 .page-header__title {
@@ -21,7 +22,7 @@
     line-height: 100%;
     text-align: center;
     text-transform: uppercase;
-    color: var(--txt-header);
+    color: var(--text);
     letter-spacing: 0.075em;
 }
 
@@ -37,4 +38,5 @@ font-size: 35px !important;
   border: none;
   background-color: transparent;
   color: var(--text);
+  cursor: pointer;
 }

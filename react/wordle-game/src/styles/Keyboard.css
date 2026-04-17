@@ -10,7 +10,7 @@
     max-width: 500px;
     gap: 3px;
     box-sizing: border-box;
-    background-color: var(--bg-header);
+    background-color: var(--primary-color);
 }
 
 .keyboard__button {
@@ -26,6 +26,7 @@
     font-weight: bold;
     text-align: center;
     padding-left: 5;
+    cursor: pointer;
 }
 
 .row {
@@ -43,19 +44,19 @@
     font-size: 1.2rem;
 }
 
-.correct {
+.correct-keyboard {
     background-color: var(--green);
     color: var(--white);
 }
 
-.present {
+.present-keyboard {
     background-color: var(--yellow);
     color: var(--white);
 }
 
-.absent {
+.absent-keyboard {
     background-color: var(--gray);
-    color: var(--white);
+    color: var(--invalid-letter);
 }
 
 @media (max-width: 380px) {

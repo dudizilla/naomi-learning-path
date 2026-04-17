@@ -8,6 +8,39 @@ import Button from "./Button";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 
+const getItemFromLocalStorae = (key, initialValue) => {
+    try {
+        if (typeof window === "undefined") {
+            return initialValue;
+        }
+
+        const item = window.localStorage.getItem(key);
+        if (item) {
+            return JSON.parse(item);
+        } else {
+            return initialValue;
+        }
+    } catch (error) {
+        console.error(error);
+        return initialValue;
+    }
+};
+
+function useLocalStorage(key, value) {
+    const [storedValue, setStoredValue] = useState(
+        getItemFromLocalStorae(key, value),
+    );
+
+    useEffect(() => {
+        try {
+            window.localStorage.setItem(key, JSON.stringify(storedValue));
+        } catch (error) {
+            console.error(error);
+        }
+    }, [key, storedValue]);
+
+    return [storedValue, setStoredValue];
+}
 export default function App() {
     const initialBoard = (filler) =>
         Array.from({ length: 6 }, () => Array(5).fill(filler));
@@ -25,7 +58,7 @@ export default function App() {
     const [keyStatus, setKeyStatus] = useState({});
     const [isAnimating, setIsAnimating] = useState(false);
     const [showThemeSwitch, setShowThemeSwitch] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
     const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
@@ -244,7 +277,7 @@ export default function App() {
     ].includes(message);
 
     console.log(word);
-    console.log(isDarkMode)
+    console.log(isDarkMode);
     return (
         <div className="app-container">
             <Header
