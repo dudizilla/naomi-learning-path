@@ -219,7 +219,6 @@ export default function App() {
         "🎉 You won!",
     ].includes(message);
 
-    console.log(word)
     return (
         <div className="app-container">
             <Header />
