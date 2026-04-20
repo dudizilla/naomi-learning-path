@@ -279,7 +279,6 @@ export default function App() {
     return (
         <div className="app-container">
             <Header
-                showThemeSwitch={showThemeSwitch}
                 onClick={handleSettings}
             />
             <InfoBlock

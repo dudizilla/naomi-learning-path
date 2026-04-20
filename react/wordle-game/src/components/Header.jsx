@@ -1,8 +1,6 @@
 import "@/styles/Header.css";
 import { useEffect } from "react";
-export default function Header({ showThemeSwitch, onClick }) {
-    useEffect(() => {
-    }, [showThemeSwitch]);
+export default function Header({onClick }) {
 
     return (
         <header className="page-header">
