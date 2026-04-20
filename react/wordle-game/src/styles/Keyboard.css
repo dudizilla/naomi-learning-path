@@ -1,42 +1,82 @@
-.keyboard{
-    margin: 30px auto 10px;
+.keyboard {
+    margin: 30px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px 28px;
+    padding: 15px 20px;
     border-radius: 15px;
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    gap: 3px;
+    box-sizing: border-box;
+    background-color: var(--primary-color);
 }
 
-.keyboard__button{
+.keyboard__button {
     box-sizing: border-box;
     height: 50px;
-    width: 45px;
-    margin: 2px;
+    width: 60px;
     background-color: var(--bg-button);
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 1.12rem;
     border: none;
     color: var(--text);
+    flex: 1;
+    font-weight: bold;
+    text-align: center;
+    padding-left: 5;
+    cursor: pointer;
 }
 
-
-.special-key{
-    width: fit-content;
-    padding: 0 25px;
+.row {
+    display: flex;
+    width: 100%;
+    gap: 4px;
 }
 
-.correct {
+.special-key {
+    flex: 1.5;
+    font-size: 0.7rem;
+}
+
+.backspace {
+    font-size: 1.2rem;
+}
+
+.correct-keyboard {
     background-color: var(--green);
     color: var(--white);
 }
 
-.present {
+.present-keyboard {
     background-color: var(--yellow);
     color: var(--white);
 }
 
-.absent {
+.absent-keyboard {
     background-color: var(--gray);
-    color: var(--white);
+    color: var(--invalid-letter);
+}
+
+@media (max-width: 380px) {
+    .keyboard {
+        gap: 4px;
+        padding: 4px 5px;
+        margin-left: 5px;
+    }
+    .row {
+        gap: 1.5px;
+    }
+    .keyboard__button {
+        height: 43px;
+        min-width: 10px;
+        font-size: 1rem;
+    }
+    .special-key {
+        font-size: 0.5rem;
+    }
+    .backspace {
+        font-size: 1rem;
+    }
 }
