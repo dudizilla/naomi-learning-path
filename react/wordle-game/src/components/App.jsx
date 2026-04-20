@@ -8,6 +8,9 @@ import Button from "./Button";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 
+const MSG_WIN = "🎉 You won!";
+const MSG_LOSS_PREFIX = "😞 The word was: ";
+
 const getItemFromLocalStorae = (key, initialValue) => {
     try {
         if (typeof window === "undefined") {
@@ -41,6 +44,7 @@ function useLocalStorage(key, value) {
 
     return [storedValue, setStoredValue];
 }
+
 export default function App() {
     const initialBoard = (filler) =>
         Array.from({ length: 6 }, () => Array(5).fill(filler));
@@ -60,15 +64,15 @@ export default function App() {
     const [showThemeSwitch, setShowThemeSwitch] = useState(false);
     const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
-    const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
     const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
+    const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
 
     function letterEval(guessWord) {
         const newStatus = structuredClone(status);
         const newKeyStatus = { ...keyStatus };
 
         if (guessWord === word.toUpperCase()) {
-            setMessage("🎉 You won!");
+            setMessage(MSG_WIN);
             setMessageTrigger((t) => t + 1);
             setGameWon(true);
             for (let i = 0; i < 5; i++) newStatus[currentRow][i] = "correct";
@@ -95,7 +99,7 @@ export default function App() {
                 }
             }
             if (currentRow === 5) {
-                setMessage("😞 The word was: " + word);
+                setMessage(MSG_LOSS_PREFIX + word);
                 setMessageTrigger((t) => t + 1);
             }
         }
@@ -271,10 +275,8 @@ export default function App() {
         }
     }, [isDarkMode]);
 
-    const isSpecialCaseMessage = [
-        "😞 The word was: " + word,
-        "🎉 You won!",
-    ].includes(message);
+    const isSpecialCaseMessage =
+        message === MSG_WIN || message.startsWith(MSG_LOSS_PREFIX);
 
     return (
         <div className="app-container">

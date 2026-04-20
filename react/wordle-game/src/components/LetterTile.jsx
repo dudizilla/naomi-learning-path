@@ -9,7 +9,7 @@ export default function LetterTile({
     const [showStatus, setShowStatus] = useState("empty");
 
     useEffect(() => {
-        if (status != "empty") {
+        if (status !== "empty") {
             const timer = setTimeout(() => {
                 setShowStatus(status);
             }, position * 350);
