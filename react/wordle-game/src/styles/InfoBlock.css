@@ -5,7 +5,7 @@
 }
 
 .info-block__title {
-    color: rgb(97, 96, 96);
+    color: var(--text);
     padding: 10px;
     border-radius: 5px;
     font-family: sans-serif;

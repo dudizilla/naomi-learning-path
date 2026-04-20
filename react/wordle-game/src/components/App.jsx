@@ -5,8 +5,42 @@ import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
 import Button from "./Button";
+import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 
+const getItemFromLocalStorae = (key, initialValue) => {
+    try {
+        if (typeof window === "undefined") {
+            return initialValue;
+        }
+
+        const item = window.localStorage.getItem(key);
+        if (item) {
+            return JSON.parse(item);
+        } else {
+            return initialValue;
+        }
+    } catch (error) {
+        console.error(error);
+        return initialValue;
+    }
+};
+
+function useLocalStorage(key, value) {
+    const [storedValue, setStoredValue] = useState(
+        getItemFromLocalStorae(key, value),
+    );
+
+    useEffect(() => {
+        try {
+            window.localStorage.setItem(key, JSON.stringify(storedValue));
+        } catch (error) {
+            console.error(error);
+        }
+    }, [key, storedValue]);
+
+    return [storedValue, setStoredValue];
+}
 export default function App() {
     const initialBoard = (filler) =>
         Array.from({ length: 6 }, () => Array(5).fill(filler));
@@ -23,8 +57,11 @@ export default function App() {
     const [gameWon, setGameWon] = useState(false);
     const [keyStatus, setKeyStatus] = useState({});
     const [isAnimating, setIsAnimating] = useState(false);
+    const [showThemeSwitch, setShowThemeSwitch] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
     const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
+    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
 
     function letterEval(guessWord) {
         const newStatus = structuredClone(status);
@@ -122,6 +159,7 @@ export default function App() {
     };
 
     const handleKeyPress = async (key) => {
+        if (showThemeSwitch) return;
         if (isAnimating) return;
         if (currentRow > 5) return;
         if (gameWon) return;
@@ -176,7 +214,6 @@ export default function App() {
         };
     }, [tiles, guess, isAnimating]);
 
-    const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
     const fetchWord = async () => {
         try {
             const response = await fetch(WORD_URL);
@@ -214,6 +251,26 @@ export default function App() {
         fetchWord();
     };
 
+    const handleSettings = () => {
+        setShowThemeSwitch(true);
+    };
+
+    const closeSettings = () => {
+        setShowThemeSwitch(false);
+    };
+
+    const saveTheme = (newValue) => {
+        setIsDarkMode(newValue);
+    };
+
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add("dark");
+        } else {
+            document.body.classList.remove("dark");
+        }
+    }, [isDarkMode]);
+
     const isSpecialCaseMessage = [
         "😞 The word was: " + word,
         "🎉 You won!",
@@ -221,7 +278,9 @@ export default function App() {
 
     return (
         <div className="app-container">
-            <Header />
+            <Header
+                onClick={handleSettings}
+            />
             <InfoBlock
                 loading={loading}
                 displayMessage={message}
@@ -237,6 +296,13 @@ export default function App() {
                 onKeyPress={handleKeyPress}
                 keyStatus={keyStatus}
             />
+            {showThemeSwitch && (
+                <ThemeSwitch
+                    isDarkMode={isDarkMode}
+                    onSave = {saveTheme}
+                    onClose={closeSettings}
+                />
+            )}
         </div>
     );
 }

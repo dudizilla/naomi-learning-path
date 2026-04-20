@@ -23,7 +23,7 @@ export default function Keyboard({ onKeyPress, keyStatus = {} }) {
                             <button
                                 className={`keyboard__button ${
                                     isSpecialKey ? "special-key" : ""
-                                } ${letter === "⌫" ? "backspace" : ""} ${status}`}
+                                } ${letter === "⌫" ? "backspace" : ""} ${status}-keyboard`}
                                 key={letter}
                                 onClick={() => onKeyPress(letter)}
                             >
