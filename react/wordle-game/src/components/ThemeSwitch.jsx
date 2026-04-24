@@ -13,21 +13,21 @@ export default function ThemeSwitch({ isDarkMode, onSave, onClose }) {
         onClose();
     };
 
-    const handleCancel = () => {
-        if (isDarkMode) {
+    const addDark = (boolTheme) => {
+        if (boolTheme) {
             document.body.classList.add("dark");
         } else {
             document.body.classList.remove("dark");
         }
+    };
+
+    const handleCancel = () => {
+        addDark(isDarkMode);
         onClose();
     };
 
     useEffect(() => {
-        if (newTheme) {
-            document.body.classList.add("dark");
-        } else {
-            document.body.classList.remove("dark");
-        }
+        addDark(newTheme);
     }, [newTheme]);
 
     return (
