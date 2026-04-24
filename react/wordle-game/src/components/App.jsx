@@ -7,10 +7,15 @@ import Keyboard from "./Keyboard";
 import Button from "./Button";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
-import "@/constants/game.js";
-
-const MSG_WIN = "🎉 You won!";
-const MSG_LOSS_PREFIX = "😞 The word was: ";
+import {
+  MSG_WIN,
+  MSG_LOSS_PREFIX,
+  WORD_LENGTH,
+  MAX_GUESSES,
+  VALIDATE_URL,
+  WORD_URL,
+  ANIMATION_TOTAL_DURATION,
+} from "@/constants/game.js";
 
 const getItemFromLocalStorae = (key, initialValue) => {
   try {
@@ -65,9 +70,6 @@ export default function App() {
   const [showThemeSwitch, setShowThemeSwitch] = useState(false);
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
-  const WORD_URL = "https://words.dev-apis.com/word-of-the-day?random=1";
-  const VALIDATE_URL = "https://words.dev-apis.com/validate-word";
-
   function letterEval(guessWord) {
     const newStatus = structuredClone(status);
     const newKeyStatus = { ...keyStatus };
@@ -97,7 +99,7 @@ export default function App() {
           }
         }
       }
-      if (currentRow === MAX_GUESSES) {
+      if (currentRow === MAX_GUESSES - 1) {
         setMessage(MSG_LOSS_PREFIX + word);
         setMessageTrigger((t) => t + 1);
       }
@@ -140,7 +142,7 @@ export default function App() {
 
         setTimeout(() => {
           setIsAnimating(false);
-        }, 1800);
+        }, ANIMATION_TOTAL_DURATION);
       } else {
         setMessage("Not a valid word. Try again.");
         setMessageTrigger((t) => t + 1);
