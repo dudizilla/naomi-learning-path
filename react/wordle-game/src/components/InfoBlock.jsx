@@ -1,32 +1,33 @@
 import "@/styles/InfoBlock.css";
 import { useState, useEffect } from "react";
+import { MESSAGE_DISPLAY_DURATION } from "@/constants/game";
 
 export default function InfoBlock({
-    loading,
-    displayMessage,
-    keepVisible = false,
-    messageTrigger,
+  loading,
+  displayMessage,
+  keepVisible = false,
+  messageTrigger,
 }) {
-    const [showMessage, setShowMessage] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
-    useEffect(() => {
-        setShowMessage(true);
+  useEffect(() => {
+    setShowMessage(true);
 
-        if (!keepVisible) {
-            const timer = setTimeout(() => {
-                setShowMessage(false);
-            }, 2000);
+    if (!keepVisible) {
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+      }, MESSAGE_DISPLAY_DURATION);
 
-            return () => clearTimeout(timer);
-        }
-    }, [displayMessage, keepVisible, messageTrigger]);
+      return () => clearTimeout(timer);
+    }
+  }, [displayMessage, keepVisible, messageTrigger]);
 
-    return (
-        <div className="info-block">
-            {loading && <span className="loader" />}
-            {!loading && displayMessage && showMessage ? (
-                <h2 className="info-block__title"> {displayMessage} </h2>
-            ) : null}
-        </div>
-    );
+  return (
+    <div className="info-block">
+      {loading && <span className="loader" />}
+      {!loading && displayMessage && showMessage ? (
+        <h2 className="info-block__title"> {displayMessage} </h2>
+      ) : null}
+    </div>
+  );
 }
