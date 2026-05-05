@@ -10,7 +10,21 @@ export default defineConfig({
       "/public": { target: "http://localhost:3000", changeOrigin: true },
     },
   },
-  plugins: [TanStackRouterVite(), react()],
+  plugins: [
+    TanStackRouterVite(),
+    react({
+      babel: {
+        plugins: [
+          [
+            "babel-plugin-react-compiler",
+            {
+              target: "19",
+            },
+          ],
+        ],
+      },
+    }),
+  ],
   test: {
     coverage: {
       provider: "istanbul",
