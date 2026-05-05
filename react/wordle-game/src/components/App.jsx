@@ -16,8 +16,9 @@ import {
   WORD_URL,
   ANIMATION_TOTAL_DURATION,
 } from "@/constants/game.js";
+import { createBoard, evaluateGuess } from "@/utils/gameLogic";
 
-const getItemFromLocalStorae = (key, initialValue) => {
+const getItemFromLocalStorage = (key, initialValue) => {
   try {
     if (typeof window === "undefined") {
       return initialValue;
@@ -37,7 +38,7 @@ const getItemFromLocalStorae = (key, initialValue) => {
 
 function useLocalStorage(key, value) {
   const [storedValue, setStoredValue] = useState(
-    getItemFromLocalStorae(key, value),
+    getItemFromLocalStorage(key, value),
   );
 
   useEffect(() => {
@@ -68,57 +69,26 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
   function letterEval(guessWord) {
-    const newStatus = structuredClone(status);
-    const newKeyStatus = { ...keyStatus };
+    const { newStatus, newKeyStatus, isWin } = evaluateGuess(
+      guessWord,
+      word,
+      currentRow,
+      status,
+      keyStatus,
+    );
+    setKeyStatus(newKeyStatus);
+    setStatus(newStatus);
 
-    if (guessWord === word.toUpperCase()) {
+    if (isWin) {
       setMessage(MSG_WIN);
       setMessageTrigger((t) => t + 1);
       setGameWon(true);
-      for (let i = 0; i < WORD_LENGTH; i++)
-        newStatus[currentRow][i] = "correct";
     } else {
-      const remainingLetters = word.toUpperCase().split("");
-      for (let i = 0; i < WORD_LENGTH; i++) {
-        if (guess[i] === word[i].toUpperCase()) {
-          newStatus[currentRow][i] = "correct";
-          remainingLetters[i] = null;
-        }
-      }
-      for (let i = 0; i < WORD_LENGTH; i++) {
-        if (newStatus[currentRow][i] === "empty") {
-          let indexAnswer = remainingLetters.indexOf(guess[i]);
-          if (indexAnswer !== -1 && newStatus[currentRow][i] !== "correct") {
-            newStatus[currentRow][i] = "present";
-            remainingLetters[indexAnswer] = null;
-          } else {
-            newStatus[currentRow][i] = "absent";
-          }
-        }
-      }
       if (currentRow === MAX_GUESSES - 1) {
         setMessage(MSG_LOSS_PREFIX + word);
         setMessageTrigger((t) => t + 1);
       }
     }
-    for (let i = 0; i < WORD_LENGTH; i++) {
-      const letter = guessWord[i];
-      const letterStatus = newStatus[currentRow][i];
-      const currentKeyStatus = newKeyStatus[letter];
-
-      if (letterStatus === "correct") {
-        newKeyStatus[letter] = "correct";
-      } else if (letterStatus === "present" && currentKeyStatus !== "correct") {
-        newKeyStatus[letter] = "present";
-      } else if (
-        letterStatus === "absent" &&
-        !["correct", "present"].includes(currentKeyStatus)
-      ) {
-        newKeyStatus[letter] = "absent";
-      }
-    }
-    setKeyStatus(newKeyStatus);
-    setStatus(newStatus);
   }
 
   const validateWord = async () => {
