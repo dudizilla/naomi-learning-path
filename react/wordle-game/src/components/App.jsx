@@ -52,10 +52,7 @@ function useLocalStorage(key, value) {
 }
 
 export default function App() {
-  const initialBoard = (filler) =>
-    Array.from({ length: MAX_GUESSES }, () => Array(WORD_LENGTH).fill(filler));
-
-  const [tiles, setTiles] = useState(initialBoard(""));
+  const [tiles, setTiles] = useState(createBoard(""));
   const [guess, setGuess] = useState([]);
   const [currentRow, setCurrentRow] = useState(0);
   const [currentCol, setCurrentCol] = useState(0);
@@ -63,7 +60,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [messageTrigger, setMessageTrigger] = useState(0);
-  const [status, setStatus] = useState(initialBoard("empty"));
+  const [status, setStatus] = useState(createBoard("empty"));
   const [gameWon, setGameWon] = useState(false);
   const [keyStatus, setKeyStatus] = useState({});
   const [isAnimating, setIsAnimating] = useState(false);
@@ -238,7 +235,7 @@ export default function App() {
   }, []);
 
   const handleRestart = () => {
-    setTiles(initialBoard(""));
+    setTiles(createBoard(""));
     setGuess([]);
     setCurrentRow(0);
     setCurrentCol(0);
@@ -246,7 +243,7 @@ export default function App() {
     setLoading(true);
     setMessage("");
     setMessageTrigger((t) => t + 1);
-    setStatus(initialBoard("empty"));
+    setStatus(createBoard("empty"));
     setGameWon(false);
     setKeyStatus({});
 
