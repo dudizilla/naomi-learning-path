@@ -104,8 +104,8 @@ function PastOrdersRoute({ loadedPromise, page, setPage }) {
                     <td>{pizza.name}</td>
                     <td>{pizza.size}</td>
                     <td>{pizza.quantity}</td>
-                    <td>{intl.format(pizza.price)}</td>
-                    <td>{intl.format(pizza.total)}</td>
+                    <td>{priceConverter(pizza.price)}</td>
+                    <td>{priceConverter(pizza.total)}</td>
                   </tr>
                 ))}
               </tbody>
