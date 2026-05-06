@@ -12,11 +12,10 @@ import {
   MSG_LOSS_PREFIX,
   WORD_LENGTH,
   MAX_GUESSES,
-  VALIDATE_URL,
   ANIMATION_TOTAL_DURATION,
 } from "@/constants/game.js";
 import { createBoard, evaluateGuess } from "@/utils/gameLogic";
-import { fetchWordOfTheDay } from "@/services/wordleApi";
+import { fetchWordOfTheDay, isValidWord } from "@/services/wordleApi";
 
 const getItemFromLocalStorage = (key, initialValue) => {
   try {
@@ -93,20 +92,14 @@ export default function App() {
 
   const validateWord = async () => {
     const guessWord = guess.join("");
+
     try {
-      const fetchResponse = await fetch(VALIDATE_URL, {
-        method: "POST",
-        body: JSON.stringify({ word: guessWord }),
-      });
-
-      const response = await fetchResponse.json();
-
-      if (response.validWord) {
+      const isWordValid = await isValidWord(guessWord);
+      if (isWordValid) {
         setIsAnimating(true);
         letterEval(guessWord);
         setCurrentRow(currentRow + 1);
         setCurrentCol(0);
-
         setTimeout(() => {
           setIsAnimating(false);
         }, ANIMATION_TOTAL_DURATION);
@@ -118,12 +111,13 @@ export default function App() {
         setTiles(newTiles);
         setCurrentCol(0);
       }
-      setGuess([]);
     } catch (error) {
-      setMessage("Could not validate word. Try again.");
+      setMessage(error.message);
       setMessageTrigger((t) => t + 1);
+    } finally {
+      setGuess([]);
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleKeyPress = async (key) => {
@@ -183,10 +177,21 @@ export default function App() {
   }, [tiles, guess, isAnimating]);
 
   useEffect(() => {
-    fetchWordOfTheDay();
+    async function fetchWord() {
+      try {
+        const newWord = await fetchWordOfTheDay();
+        setWord(newWord);
+      } catch (error) {
+        setMessage(error.message);
+        setMessageTrigger((t) => t + 1);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchWord();
   }, []);
 
-  const handleRestart = () => {
+  const handleRestart = async () => {
     setTiles(createBoard(""));
     setGuess([]);
     setCurrentRow(0);
@@ -199,7 +204,15 @@ export default function App() {
     setGameWon(false);
     setKeyStatus({});
 
-    fetchWordOfTheDay();
+    try {
+      const newWord = await fetchWordOfTheDay();
+      setWord(newWord);
+    } catch (error) {
+      setMessage(error.message);
+      setMessageTrigger((t) => t + 1);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSettings = () => {
