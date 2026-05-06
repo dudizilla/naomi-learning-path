@@ -13,10 +13,10 @@ import {
   WORD_LENGTH,
   MAX_GUESSES,
   VALIDATE_URL,
-  WORD_URL,
   ANIMATION_TOTAL_DURATION,
 } from "@/constants/game.js";
 import { createBoard, evaluateGuess } from "@/utils/gameLogic";
+import { fetchWordOfTheDay } from "@/services/wordleApi";
 
 const getItemFromLocalStorage = (key, initialValue) => {
   try {
@@ -123,7 +123,6 @@ export default function App() {
       setMessage("Could not validate word. Try again.");
       setMessageTrigger((t) => t + 1);
     }
-
     setLoading(false);
   };
 
@@ -183,25 +182,8 @@ export default function App() {
     };
   }, [tiles, guess, isAnimating]);
 
-  const fetchWord = async () => {
-    try {
-      const response = await fetch(WORD_URL);
-      if (!response.ok) {
-        throw new Error(response.status);
-      }
-      const result = await response.json();
-      setWord(result.word);
-    } catch (error) {
-      console.error(error.message);
-      setMessage("Could not load word. Try again.");
-      setMessageTrigger((t) => t + 1);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchWord();
+    fetchWordOfTheDay();
   }, []);
 
   const handleRestart = () => {
@@ -217,7 +199,7 @@ export default function App() {
     setGameWon(false);
     setKeyStatus({});
 
-    fetchWord();
+    fetchWordOfTheDay();
   };
 
   const handleSettings = () => {
