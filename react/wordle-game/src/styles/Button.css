@@ -4,6 +4,7 @@
   background-color: #000000;
   color: #ffffff;
   margin: 30px auto 10px;
+  border: none;
   border-radius: 15px;
   font-weight: 600;
   font-size: 20px;
@@ -13,7 +14,7 @@
 
 .restart-button:hover {
   background-color: var(--bg-button);
-  color: var(--txt-header);
+  color: var(--text);
   border: none;
   box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
 }
