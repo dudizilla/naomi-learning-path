@@ -142,7 +142,6 @@ export default function App() {
       try {
         const newWord = await fetchWordOfTheDay();
         setWord(newWord);
-        console.log(newWord);
       } catch (error) {
         setMessage(error.message);
         setMessageTrigger((t) => t + 1);
