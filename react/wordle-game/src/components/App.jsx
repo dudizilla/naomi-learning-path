@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
@@ -14,8 +14,8 @@ import {
   MAX_GUESSES,
   ANIMATION_TOTAL_DURATION,
 } from "@/constants/game.js";
-import { createBoard, evaluateGuess } from "@/utils/gameLogic";
 import { fetchWordOfTheDay, isValidWord } from "@/services/wordleApi";
+import { gameReducer, createInitialState } from "@/reducers/gameReducer";
 
 const getItemFromLocalStorage = (key, initialValue) => {
   try {
@@ -52,114 +52,75 @@ function useLocalStorage(key, value) {
 }
 
 export default function App() {
-  const [tiles, setTiles] = useState(createBoard(""));
-  const [guess, setGuess] = useState([]);
-  const [currentRow, setCurrentRow] = useState(0);
-  const [currentCol, setCurrentCol] = useState(0);
+  const [gameState, dispatch] = useReducer(
+    gameReducer,
+    undefined,
+    createInitialState,
+  );
   const [word, setWord] = useState("");
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [messageTrigger, setMessageTrigger] = useState(0);
-  const [status, setStatus] = useState(createBoard("empty"));
-  const [gameWon, setGameWon] = useState(false);
-  const [keyStatus, setKeyStatus] = useState({});
-  const [isAnimating, setIsAnimating] = useState(false);
   const [showThemeSwitch, setShowThemeSwitch] = useState(false);
   const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
 
-  function letterEval(guessWord) {
-    const { newStatus, newKeyStatus, isWin } = evaluateGuess(
-      guessWord,
-      word,
-      currentRow,
-      status,
-      keyStatus,
-    );
-    setKeyStatus(newKeyStatus);
-    setStatus(newStatus);
-
-    if (isWin) {
-      setMessage(MSG_WIN);
-      setMessageTrigger((t) => t + 1);
-      setGameWon(true);
-    } else {
-      if (currentRow === MAX_GUESSES - 1) {
-        setMessage(MSG_LOSS_PREFIX + word);
-        setMessageTrigger((t) => t + 1);
-      }
-    }
-  }
-
+  const showMessage = (msg) => {
+    setMessage(msg);
+    setMessageTrigger((t) => t + 1);
+  };
   const validateWord = async () => {
-    const guessWord = guess.join("");
+    const guessWord = gameState.guess.join("");
 
     try {
       const isWordValid = await isValidWord(guessWord);
+
       if (isWordValid) {
-        setIsAnimating(true);
-        letterEval(guessWord);
-        setCurrentRow(currentRow + 1);
-        setCurrentCol(0);
+        dispatch({ type: "SET_ANIMATING", isAnimating: true });
+        dispatch({ type: "SUBMIT_GUESS", guessWord, word });
+
+        if (guessWord === word.toUpperCase()) {
+          showMessage(MSG_WIN);
+        } else {
+          if (gameState.currentRow === MAX_GUESSES - 1) {
+            showMessage(MSG_LOSS_PREFIX + word);
+          }
+        }
         setTimeout(() => {
-          setIsAnimating(false);
+          dispatch({ type: "SET_ANIMATING", isAnimating: false });
         }, ANIMATION_TOTAL_DURATION);
       } else {
-        setMessage("Not a valid word. Try again.");
-        setMessageTrigger((t) => t + 1);
-        const newTiles = structuredClone(tiles);
-        for (let i = 0; i < WORD_LENGTH; i++) newTiles[currentRow][i] = "";
-        setTiles(newTiles);
-        setCurrentCol(0);
+        showMessage("Not a valid word. Try again.");
+        dispatch({ type: "CLEAR_ROW" });
       }
     } catch (error) {
-      setMessage(error.message);
-      setMessageTrigger((t) => t + 1);
+      showMessage(error.message);
     } finally {
-      setGuess([]);
       setLoading(false);
     }
   };
 
   const handleKeyPress = async (key) => {
     if (showThemeSwitch) return;
-    if (isAnimating) return;
-    if (currentRow > MAX_GUESSES - 1) return;
-    if (gameWon) return;
 
     if (key === "ENTER") {
-      if (currentCol === WORD_LENGTH) {
+      if (gameState.currentCol === WORD_LENGTH) {
         setLoading(true);
         await validateWord();
       } else {
-        setMessage("Not enough letters");
-        setMessageTrigger((t) => t + 1);
+        showMessage("Not enough letters");
       }
-
-      return;
     } else if (key === "BACKSPACE" || key === "⌫") {
-      if (currentCol > 0) {
-        const newTiles = structuredClone(tiles);
-        newTiles[currentRow][currentCol - 1] = "";
-        const newGuess = [...guess];
-        newGuess.pop();
-        setGuess(newGuess);
-        setTiles(newTiles);
-        setCurrentCol(currentCol - 1);
-      }
+      dispatch({ type: "REMOVE_LETTER" });
     } else {
-      if (currentCol < WORD_LENGTH) {
+      if (gameState.currentCol < WORD_LENGTH) {
         const isLetter = /^[a-zA-Z]$/.test(key);
         if (!isLetter) {
           return;
         }
-        if (keyStatus[key] === "absent") {
+        if (gameState.keyStatus[key] === "absent") {
           return;
         }
-        const newTiles = structuredClone(tiles);
-        newTiles[currentRow][currentCol] = key;
-        setGuess([...guess, key]);
-        setTiles(newTiles);
-        setCurrentCol(currentCol + 1);
+        dispatch({ type: "ADD_LETTER", letter: key });
       }
     }
   };
@@ -174,13 +135,14 @@ export default function App() {
     return () => {
       window.removeEventListener("keydown", handlePhysicalKey);
     };
-  }, [tiles, guess, isAnimating]);
+  }, [gameState]);
 
   useEffect(() => {
     async function fetchWord() {
       try {
         const newWord = await fetchWordOfTheDay();
         setWord(newWord);
+        console.log(newWord);
       } catch (error) {
         setMessage(error.message);
         setMessageTrigger((t) => t + 1);
@@ -192,24 +154,15 @@ export default function App() {
   }, []);
 
   const handleRestart = async () => {
-    setTiles(createBoard(""));
-    setGuess([]);
-    setCurrentRow(0);
-    setCurrentCol(0);
-    setWord("");
+    dispatch({ type: "RESTART" });
+    showMessage("");
     setLoading(true);
-    setMessage("");
-    setMessageTrigger((t) => t + 1);
-    setStatus(createBoard("empty"));
-    setGameWon(false);
-    setKeyStatus({});
 
     try {
       const newWord = await fetchWordOfTheDay();
       setWord(newWord);
     } catch (error) {
-      setMessage(error.message);
-      setMessageTrigger((t) => t + 1);
+      showMessage(error.message);
     } finally {
       setLoading(false);
     }
@@ -247,9 +200,9 @@ export default function App() {
         keepVisible={isSpecialCaseMessage}
         messageTrigger={messageTrigger}
       />
-      <GameBoard tiles={tiles} status={status} />
+      <GameBoard tiles={gameState.tiles} status={gameState.status} />
       {isSpecialCaseMessage && <Button onGameRestart={handleRestart} />}
-      <Keyboard onKeyPress={handleKeyPress} keyStatus={keyStatus} />
+      <Keyboard onKeyPress={handleKeyPress} keyStatus={gameState.keyStatus} />
       {showThemeSwitch && (
         <ThemeSwitch
           isDarkMode={isDarkMode}
