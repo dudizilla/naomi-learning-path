@@ -1,18 +1,22 @@
 "use client";
-import { useState, useEffect } from "react";
+import "@/styles/App.css";
 import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
 import RestartButton from "./RestartButton";
 import ThemeSwitch from "./ThemeSwitch";
-import "@/styles/App.css";
 import { useWordleGame } from "@/hooks/useWordleGame";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useThemeSwitch } from "@/hooks/useThemeSwitch";
 
 export default function App() {
-  const [showThemeSwitch, setShowThemeSwitch] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useLocalStorage("isDarkMode", false);
+  const {
+    isDarkMode,
+    showThemeSwitch,
+    handleSettings,
+    closeSettings,
+    saveTheme,
+  } = useThemeSwitch();
 
   const {
     tiles,
@@ -25,26 +29,6 @@ export default function App() {
     handleKeyPress,
     handleRestart,
   } = useWordleGame(showThemeSwitch);
-
-  const handleSettings = () => {
-    setShowThemeSwitch(true);
-  };
-
-  const closeSettings = () => {
-    setShowThemeSwitch(false);
-  };
-
-  const saveTheme = (newValue) => {
-    setIsDarkMode(newValue);
-  };
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.body.classList.add("dark");
-    } else {
-      document.body.classList.remove("dark");
-    }
-  }, [isDarkMode]);
 
   return (
     <div className="app-container">
