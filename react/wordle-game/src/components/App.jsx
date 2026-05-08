@@ -8,23 +8,7 @@ import RestartButton from "./RestartButton";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 import { useWordleGame } from "@/hooks/useWordleGame";
-import { getItemFromLocalStorage } from "@/services/localStorage";
-
-function useLocalStorage(key, value) {
-  const [storedValue, setStoredValue] = useState(
-    getItemFromLocalStorage(key, value),
-  );
-
-  useEffect(() => {
-    try {
-      window.localStorage.setItem(key, JSON.stringify(storedValue));
-    } catch (error) {
-      console.error(error);
-    }
-  }, [key, storedValue]);
-
-  return [storedValue, setStoredValue];
-}
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 export default function App() {
   const [showThemeSwitch, setShowThemeSwitch] = useState(false);
