@@ -8,24 +8,7 @@ import RestartButton from "./RestartButton";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 import { useWordleGame } from "@/hooks/useWordleGame";
-
-const getItemFromLocalStorage = (key, initialValue) => {
-  try {
-    if (typeof window === "undefined") {
-      return initialValue;
-    }
-    const item = window.localStorage.getItem(key);
-
-    if (item) {
-      return JSON.parse(item);
-    } else {
-      return initialValue;
-    }
-  } catch (error) {
-    console.error(error);
-    return initialValue;
-  }
-};
+import { getItemFromLocalStorage } from "@/services/localStorage";
 
 function useLocalStorage(key, value) {
   const [storedValue, setStoredValue] = useState(
