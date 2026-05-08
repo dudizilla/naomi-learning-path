@@ -17,7 +17,13 @@ export const initialGameState = createInitialState();
 export function gameReducer(state = initialGameState, action) {
   switch (action.type) {
     case "ADD_LETTER": {
-      if (state.isAnimating || state.gameWon || state.currentRow >= MAX_GUESSES)
+      if (
+        state.isAnimating ||
+        state.gameWon ||
+        state.currentRow >= MAX_GUESSES ||
+        state.currentCol >= WORD_LENGTH ||
+        state.keyStatus[action.letter] === "absent"
+      )
         return state;
       const newTiles = structuredClone(state.tiles);
       newTiles[state.currentRow][state.currentCol] = action.letter;

@@ -68,14 +68,8 @@ export const useWordleGame = (showThemeSwitch) => {
     } else if (key === "BACKSPACE" || key === "⌫") {
       dispatch({ type: "REMOVE_LETTER" });
     } else {
-      if (gameState.currentCol < WORD_LENGTH) {
-        const isLetter = /^[a-zA-Z]$/.test(key);
-        if (!isLetter) {
-          return;
-        }
-        if (gameState.keyStatus[key] === "absent") {
-          return;
-        }
+      const isLetter = /^[a-zA-Z]$/.test(key);
+      if (isLetter) {
         dispatch({ type: "ADD_LETTER", letter: key });
       }
     }
@@ -87,7 +81,6 @@ export const useWordleGame = (showThemeSwitch) => {
       handleKeyPress(key);
     };
     window.addEventListener("keydown", handlePhysicalKey);
-
     return () => {
       window.removeEventListener("keydown", handlePhysicalKey);
     };
