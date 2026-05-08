@@ -4,7 +4,7 @@ import Header from "./Header";
 import GameBoard from "./GameBoard";
 import InfoBlock from "./InfoBlock";
 import Keyboard from "./Keyboard";
-import Button from "./Button";
+import RestartButton from "./RestartButton";
 import ThemeSwitch from "./ThemeSwitch";
 import "@/styles/App.css";
 import { useWordleGame } from "@/hooks/useWordleGame";
@@ -89,7 +89,7 @@ export default function App() {
         messageTrigger={messageTrigger}
       />
       <GameBoard tiles={tiles} status={status} />
-      {isSpecialCaseMessage && <Button onGameRestart={handleRestart} />}
+      {isSpecialCaseMessage && <RestartButton onGameRestart={handleRestart} />}
       <Keyboard onKeyPress={handleKeyPress} keyStatus={keyStatus} />
       {showThemeSwitch && (
         <ThemeSwitch
