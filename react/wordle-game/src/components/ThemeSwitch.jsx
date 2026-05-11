@@ -1,3 +1,4 @@
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import "@/styles/ThemeSwitch.css";
 import { useState, useEffect, useRef } from "react";
 
@@ -5,44 +6,7 @@ export default function ThemeSwitch({ isDarkMode, onSave, onClose }) {
   const [newTheme, setNewTheme] = useState(isDarkMode);
   const modalRef = useRef(null);
 
-  useEffect(() => {
-    const modalElement = modalRef.current;
-    if (!modalElement) return;
-    const focusableElements = modalElement.querySelectorAll(
-      'button, [href], input, [tabindex]:not([tabindex="-1"])',
-    );
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-
-    firstElement?.focus();
-
-    const handleTabKeyPress = (event) => {
-      if (event.key === "Tab") {
-        if (event.shiftKey && document.activeElement === firstElement) {
-          event.preventDefault();
-          lastElement.focus();
-        } else if (!event.shiftKey && document.activeElement === lastElement) {
-          event.preventDefault();
-          firstElement.focus();
-        }
-      }
-    };
-
-    const handleEscapeKeyPress = (event) => {
-      if (event.key === "Escape") {
-        onClose();
-      }
-    };
-
-    modalElement.addEventListener("keydown", handleTabKeyPress);
-    modalElement.addEventListener("keydown", handleEscapeKeyPress);
-
-    return () => {
-      modalElement.removeEventListener("keydown", handleTabKeyPress);
-      modalElement.removeEventListener("keydown", handleEscapeKeyPress);
-    };
-  }, []);
-
+  useFocusTrap(modalRef);
   const handleToggle = () => {
     setNewTheme(!newTheme);
   };
