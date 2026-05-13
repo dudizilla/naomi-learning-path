@@ -1,66 +1,61 @@
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import "@/styles/ThemeSwitch.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function ThemeSwitch({ isDarkMode, onSave, onClose }) {
-    const [newTheme, setNewTheme] = useState(isDarkMode);
+  const [newTheme, setNewTheme] = useState(isDarkMode);
+  const modalRef = useRef(null);
 
-    const handleToggle = () => {
-        setNewTheme(!newTheme);
-    };
+  useFocusTrap(modalRef);
+  const handleToggle = () => {
+    setNewTheme(!newTheme);
+  };
 
-    const handleSave = () => {
-        onSave(newTheme);
-        onClose();
-    };
+  const handleSave = () => {
+    onSave(newTheme);
+    onClose();
+  };
 
-    const addDark = (boolTheme) => {
-        if (boolTheme) {
-            document.body.classList.add("dark");
-        } else {
-            document.body.classList.remove("dark");
-        }
-    };
+  const addDark = (boolTheme) => {
+    if (boolTheme) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  };
 
-    const handleCancel = () => {
-        addDark(isDarkMode);
-        onClose();
-    };
+  const handleCancel = () => {
+    addDark(isDarkMode);
+    onClose();
+  };
 
-    useEffect(() => {
-        addDark(newTheme);
-    }, [newTheme]);
+  useEffect(() => {
+    addDark(newTheme);
+  }, [newTheme]);
 
-    return (
-        <div
-            className="overlay"
-            onClick={onClose}
-        >
-            <div
-                className="switch-block"
-                onClick={(e) => e.stopPropagation()}
-            >
-                <h2 className="switch-block__title">THEME</h2>
-                <input
-                    type="checkbox"
-                    className="theme-switch"
-                    checked={newTheme}
-                    onChange={handleToggle}
-                />
-                <div className="button-block">
-                    <button
-                        className="cancel-btn"
-                        onClick={handleCancel}
-                    >
-                        CANCEL
-                    </button>
-                    <button
-                        className="save-btn"
-                        onClick={handleSave}
-                    >
-                        SAVE
-                    </button>
-                </div>
-            </div>
+  return (
+    <div className="overlay" onClick={onClose}>
+      <div
+        className="switch-block"
+        ref={modalRef}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="switch-block__title">THEME</h2>
+        <input
+          type="checkbox"
+          className="theme-switch"
+          checked={newTheme}
+          onChange={handleToggle}
+        />
+        <div className="button-block">
+          <button className="cancel-btn" onClick={handleCancel}>
+            CANCEL
+          </button>
+          <button className="save-btn" onClick={handleSave}>
+            SAVE
+          </button>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
